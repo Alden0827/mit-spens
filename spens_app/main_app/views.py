@@ -69,6 +69,13 @@ def main_page(request):
     return render(request, "index.html", {'fullname': fullname})
 
 @login_required
+def bdm_page(request):
+    first_name = request.user.first_name
+    last_name = request.user.last_name
+    fullname = first_name + ' ' + last_name
+    return render(request, "test.html", {'fullname': fullname})
+
+@login_required
 def user_activation():
     user = User.objects.get(username="username_here")
     user.is_active = True
