@@ -1,0 +1,10 @@
+v4.0.0-beta3 Latest
+Release Notes
+New Features
+Established distribution build folder dist.
+Dependency Changes
+Replaced js-beautify with prettier for code formatting.
+Downgraded sass to a compatible version.
+Upgrades
+Upgraded astro to version 5.
+Updated bootstrap to version 5.3.3.

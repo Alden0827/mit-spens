@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restful API Test</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>Restful API Test</h2>
+
+    <form id="deduplicateForm">
+        <label for="threshold">Threshold (optional):</label>
+        <input type="number" id="threshold" name="threshold" step="1" value="90" max="100" min="50">
+        <br><br>
+
+        <button type="submit">Submit</button>
+        <button type="button" class="get-sample-data">Sample</button>
+        <button type="button" class="print-status">Print Current Status</button> <!-- New Button -->
+    </form>
+
+    <h3>Response:</h3>
+    <pre id="response"></pre>
+
+    <script>
+        $(document).ready(function(){
+            let lastTaskId = null; // Store the last submitted task ID
+
+            $("#deduplicateForm").submit(function(event){
+                event.preventDefault(); // Prevent form from submitting normally
+
+                let threshold = $("#threshold").val();
+
+                $.ajax({
+                    url: "http://127.0.0.1:5000/deduplicate",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        threshold: threshold ? parseFloat(threshold) : null
+                    }),
+                    success: function(response) {
+                        $("#response").text(JSON.stringify(response, null, 2));
+                        
+                        if (response.task_id) {
+                            lastTaskId = response.task_id; // Store task ID for later use
+                        }
+                    },
+                    error: function(xhr) {
+                        $("#response").text("Error: " + xhr.responseText);
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+
+            $(document).on('click','.get-sample-data', function(e){
+                e.preventDefault();
+
+                $.ajax({
+                    url: "http://127.0.0.1:5000/sample/1/2",
+                    contentType: "application/json",
+                    success: function(response) {
+                        $("#response").text(JSON.stringify(response, null, 2));
+                    },
+                    error: function(xhr) {
+                        $("#response").text("Error: " + xhr.responseText);
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+
+            // Check task status
+            $(document).on('click', '.print-status', function(e){
+                e.preventDefault();
+
+                let taskId = lastTaskId || prompt("Enter Task ID:");
+
+                if (!taskId) {
+                    alert("Task ID is required!");
+                    return;
+                }
+
+                $.ajax({
+                    url: `https://172.31.196.14:5000/task_status/${taskId}`,
+                    contentType: "application/json",
+                    success: function(response) {
+                        $("#response").text(JSON.stringify(response, null, 2));
+                    },
+                    error: function(xhr) {
+                        $("#response").text("Error: " + xhr.responseText);
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+
+        });
+    </script>
+
+</body>
+</html>

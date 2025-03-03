@@ -1,0 +1,1 @@
+curl -X POST http://127.0.0.1:5000/start-deduplication -H "Content-Type: application/json" -d "{\"threshold\":95, \"subset\":10000}"
