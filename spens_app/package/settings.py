@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'package.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_socpen',  # Change to your actual database name
+        'NAME': 'imt_spens',  # Change to your actual database name
         'USER': 'root',        # Change to your MySQL username
         'PASSWORD': '',  # Change to your MySQL password
         'HOST': 'localhost',  
@@ -171,7 +171,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 ## --------------------------------------------------------------
 
-APP_PROGRAM = 'SocPen'
-APP_NAME = 'Nexus'
+APP_PROGRAM = 'IMT'
+APP_NAME = 'Spens'
 APP_VERSION = 'v1.0 (alpha)'
 

@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Home - My Website{% endblock %}
+{% block title %}
+  {{app_program}} {{app_name}} | Dashboard
+{% endblock %}
 
 {% block content %}
+<!-- app-content-header -->
+<!--end::App Content-->
 
 
         <!--begin::App Content Header-->
@@ -23,161 +27,341 @@
           </div>
           <!--end::Container-->
         </div>
-        <!--end::App Content Header-->
-        <!--begin::App Content-->
         <div class="app-content">
           <!--begin::Container-->
           <div class="container-fluid">
-            <!--begin::Row-->
+            <!-- Info boxes -->
             <div class="row">
-              <!--begin::Col-->
-              <div class="col-lg-3 col-6">
-                <!--begin::Small Box Widget 1-->
-                <div class="small-box text-bg-primary">
-                  <div class="inner">
-                    <h3>150</h3>
-                    <p>New Orders</p>
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                  <span class="info-box-icon text-bg-primary shadow-sm">
+                    <i class="bi bi-gear-fill"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Disbursement Status</span>
+                    <span class="info-box-number">
+                      10
+                      <small>%</small>
+                    </span>
                   </div>
-                  <svg
-                    class="small-box-icon"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
-                    ></path>
-                  </svg>
-                  <a
-                    href="#"
-                    class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
-                  >
-                    More info <i class="bi bi-link-45deg"></i>
-                  </a>
+                  <!-- /.info-box-content -->
                 </div>
-                <!--end::Small Box Widget 1-->
+                <!-- /.info-box -->
               </div>
-              <!--end::Col-->
-              <div class="col-lg-3 col-6">
-                <!--begin::Small Box Widget 2-->
-                <div class="small-box text-bg-success">
-                  <div class="inner">
-                    <h3>53<sup class="fs-5">%</sup></h3>
-                    <p>Bounce Rate</p>
+              <!-- /.col -->
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                  <span class="info-box-icon text-bg-danger shadow-sm">
+                    <i class="bi bi-hand-thumbs-up-fill"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Number of Waitlisted Beneficiaries</span>
+                    <span class="info-box-number">41,410</span>
                   </div>
-                  <svg
-                    class="small-box-icon"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z"
-                    ></path>
-                  </svg>
-                  <a
-                    href="#"
-                    class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
-                  >
-                    More info <i class="bi bi-link-45deg"></i>
-                  </a>
+                  <!-- /.info-box-content -->
                 </div>
-                <!--end::Small Box Widget 2-->
+                <!-- /.info-box -->
               </div>
-              <!--end::Col-->
-              <div class="col-lg-3 col-6">
-                <!--begin::Small Box Widget 3-->
-                <div class="small-box text-bg-warning">
-                  <div class="inner">
-                    <h3>44</h3>
-                    <p>User Registrations</p>
+              <!-- /.col -->
+              <!-- fix for small devices only -->
+              <!-- <div class="clearfix hidden-md-up"></div> -->
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                  <span class="info-box-icon text-bg-success shadow-sm">
+                    <i class="bi bi-cart-fill"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Number of Beneficiaries</span>
+                    <span class="info-box-number">760</span>
                   </div>
-                  <svg
-                    class="small-box-icon"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"
-                    ></path>
-                  </svg>
-                  <a
-                    href="#"
-                    class="small-box-footer link-dark link-underline-opacity-0 link-underline-opacity-50-hover"
-                  >
-                    More info <i class="bi bi-link-45deg"></i>
-                  </a>
+                  <!-- /.info-box-content -->
                 </div>
-                <!--end::Small Box Widget 3-->
+                <!-- /.info-box -->
               </div>
-              <!--end::Col-->
-              <div class="col-lg-3 col-6">
-                <!--begin::Small Box Widget 4-->
-                <div class="small-box text-bg-danger">
-                  <div class="inner">
-                    <h3>65</h3>
-                    <p>Unique Visitors</p>
+              <!-- /.col -->
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                  <span class="info-box-icon text-bg-warning shadow-sm">
+                    <i class="bi bi-people-fill"></i>
+                  </span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Number of Delisted Beneficiaeies</span>
+                    <span class="info-box-number">2,000</span>
                   </div>
-                  <svg
-                    class="small-box-icon"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      clip-rule="evenodd"
-                      fill-rule="evenodd"
-                      d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z"
-                    ></path>
-                    <path
-                      clip-rule="evenodd"
-                      fill-rule="evenodd"
-                      d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z"
-                    ></path>
-                  </svg>
-                  <a
-                    href="#"
-                    class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover"
-                  >
-                    More info <i class="bi bi-link-45deg"></i>
-                  </a>
+                  <!-- /.info-box-content -->
                 </div>
-                <!--end::Small Box Widget 4-->
+                <!-- /.info-box -->
               </div>
-              <!--end::Col-->
+              <!-- /.col -->
             </div>
-            <!--end::Row-->
+            <!-- /.row -->
             <!--begin::Row-->
             <div class="row">
-              <!-- Start col -->
-              <div class="col-lg-7 connectedSortable">
+              <div class="col-md-12">
                 <div class="card mb-4">
-                  <div class="card-header"><h3 class="card-title">Sales Value</h3></div>
-                  <div class="card-body"><div id="revenue-chart"></div></div>
-                </div>
-                <!-- /.card -->
-                <!-- DIRECT CHAT -->
-                <div class="card direct-chat direct-chat-primary mb-4">
                   <div class="card-header">
-                    <h3 class="card-title">Direct Chat</h3>
+                    <h5 class="card-title">Monthly Recap Report</h5>
                     <div class="card-tools">
-                      <span title="3 New Messages" class="badge text-bg-primary"> 3 </span>
                       <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
                         <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
                         <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
                       </button>
-                      <button
-                        type="button"
-                        class="btn btn-tool"
-                        title="Contacts"
-                        data-lte-toggle="chat-pane"
-                      >
-                        <i class="bi bi-chat-text-fill"></i>
+                      <div class="btn-group">
+                        <button
+                          type="button"
+                          class="btn btn-tool dropdown-toggle"
+                          data-bs-toggle="dropdown"
+                        >
+                          <i class="bi bi-wrench"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" role="menu">
+                          <a href="#" class="dropdown-item">Action</a>
+                          <a href="#" class="dropdown-item">Another action</a>
+                          <a href="#" class="dropdown-item"> Something else here </a>
+                          <a class="dropdown-divider"></a>
+                          <a href="#" class="dropdown-item">Separated link</a>
+                        </div>
+                      </div>
+                      <button type="button" class="btn btn-tool" data-lte-toggle="card-remove">
+                        <i class="bi bi-x-lg"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <!--begin::Row-->
+                    <div class="row">
+                      <div class="col-md-8">
+                        <p class="text-center">
+                          <strong>Obligation & Disbursement trend : 1 Jan, 2025 - 30 Jul, 2025</strong>
+                        </p>
+                        <div id="sales-chart"></div>
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-md-4">
+                        <p class="text-center"><strong>General Status</strong></p>
+                        <div class="progress-group">
+                          Budget Allocation
+                          <span class="float-end"><b>Php 30,000,000.00</b></span>
+                          <div class="progress progress-sm">
+                            <div class="progress-bar text-bg-primary" style="width: 100%"></div>
+                          </div>
+                        </div>
+                        <!-- /.progress-group -->
+                        <div class="progress-group">
+                          Obligated Amount
+                          <span class="float-end"><b>Php 20,000,000.00</b> ( 63.33% )</span>
+                          <div class="progress progress-sm">
+                            <div class="progress-bar text-bg-danger" style="width: 63.33%"></div>
+                          </div>
+                        </div>
+                        <!-- /.progress-group -->
+                        <div class="progress-group">
+                          <span class="progress-text">Obligated vs Disbursement</span>
+                          <span class="float-end"><b>18,000,000.00</b> ( 10 %)</span>
+                          <div class="progress progress-sm">
+                            <div class="progress-bar text-bg-success" style="width: 10%"></div>
+                          </div>
+                        </div>
+                        <!-- /.progress-group -->
+                        <div class="progress-group">
+                          Liquidation vs Disbursed
+                          <span class="float-end"><b>18,000,000.00</b> ( 10% )</span>
+                          <div class="progress progress-sm">
+                            <div class="progress-bar text-bg-warning" style="width: 10%"></div>
+                          </div>
+                        </div>
+                        <!-- /.progress-group -->
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!--end::Row-->
+                  </div>
+                  <!-- ./card-body -->
+                  <div class="card-footer">
+                    <!--begin::Row-->
+                    <div class="row">
+                      <div class="col-md-3 col-6">
+                        <div class="text-center border-end">
+                          <span class="text-success">
+                            <i class="bi bi-caret-up-fill"></i> 17%
+                          </span>
+                          <h5 class="fw-bold mb-0">5,210</h5>
+                          <span class="text-uppercase">SARANGANI</span>
+                        </div>
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-md-3 col-6">
+                        <div class="text-center border-end">
+                          <span class="text-info"> <i class="bi bi-caret-left-fill"></i> 0% </span>
+                          <h5 class="fw-bold mb-0">10,390</h5>
+                          <span class="text-uppercase">SOUTH COTABATO</span>
+                        </div>
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-md-3 col-6">
+                        <div class="text-center border-end">
+                          <span class="text-success">
+                            <i class="bi bi-caret-up-fill"></i> 20%
+                          </span>
+                          <h5 class="fw-bold mb-0">24,813</h5>
+                          <span class="text-uppercase">NORTH COTABATO</span>
+                        </div>
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-md-3 col-6">
+                        <div class="text-center">
+                          <span class="text-danger">
+                            <i class="bi bi-caret-down-fill"></i> 18%
+                          </span>
+                          <h5 class="fw-bold mb-0">1200</h5>
+                          <span class="text-uppercase">SULTAN KUDARAT</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!--end::Row-->
+                  </div>
+                  <!-- /.card-footer -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!--end::Row-->
+
+
+
+            <!--begin::Row-->
+            <div class="row">
+              <!-- Start col -->
+              <div class="col-md-8">
+                <!--begin::Row-->
+
+                <!--end::Row-->
+                <!--begin::Latest Order Widget-->
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Payout History</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
+                        <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
+                        <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-lte-toggle="card-remove">
+                        <i class="bi bi-x-lg"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body p-0">
+                    <div class="table-responsive">
+                      <table class="table m-0">
+                        <thead>
+                          <tr>
+                            <th>DV#</th>
+                            <th>Particular</th>
+                            <th>Status</th>
+                            <th>Disbursement Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <a
+                                href="pages/examples/invoice.html"
+                                class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                                >DV9842</a
+                              >
+                            </td>
+                            <td>Koronadal City</td>
+                            <td><span class="badge text-bg-success"> Liquidated </span></td>
+                            <td><div id="">23 Jan 2025</div></td>
+                            <!-- <td><div id="table-sparkline-1"></div></td> -->
+                          </tr>
+                          <tr>
+                            <td>
+                              <a
+                                href="pages/examples/invoice.html"
+                                class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                                >DV1848</a
+                              >
+                            </td>
+                            <td>Polomolok</td>
+                            <td><span class="badge text-bg-warning">Pending</span></td>
+                            <td><div id="">23 Jan 2025</div></td>
+                            <!-- <td><div id="table-sparkline-2"></div></td> -->
+                          </tr>
+                          <tr>
+                            <td>
+                              <a
+                                href="pages/examples/invoice.html"
+                                class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                                >DV7429</a
+                              >
+                            </td>
+                            <td>General Santos City - Calumpang</td>
+                            <td><span class="badge text-bg-danger"> Cancelled </span></td>
+                            <!-- <td><div id="table-sparkline-3"></div></td> -->
+                            <td><div id="">23 Jan 2025</div></td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <a
+                                href="pages/examples/invoice.html"
+                                class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                                >DV7429</a
+                              >
+                            </td>
+                            <td>General Santos City - Fatima</td>
+                            <td><span class="badge text-bg-info">On Progress</span></td>
+                            <!-- <td><div id="table-sparkline-4"></div></td> -->
+                            <td><div id="">23 Jan 2025</div></td>
+
+                          </tr>
+                          <tr>
+                            <td>
+                              <a
+                                href="pages/examples/invoice.html"
+                                class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                                >DV1848</a
+                              >
+                            </td>
+                            <td>Tupi</td>
+                            <td><span class="badge text-bg-warning">Pending</span></td>
+                            <!-- <td><div id="table-sparkline-5"></div></td> -->
+                            <td><div id="">23 Jan 2025</div></td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer clearfix">
+                    <a href="javascript:void(0)" class="btn btn-sm btn-primary float-start">
+                      Refresh
+                    </a>
+                    <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-end">
+                      View All Activities
+                    </a>
+                  </div>
+                  <!-- /.card-footer -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+              <div class="col-md-4">
+                <!-- Info Boxes Style 2 -->
+                
+                <!-- /.info-box -->
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <h3 class="card-title">Distribution of Beneficiary per Province</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
+                        <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
+                        <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
                       </button>
                       <button type="button" class="btn btn-tool" data-lte-toggle="card-remove">
                         <i class="bi bi-x-lg"></i>
@@ -186,259 +370,56 @@
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
-                    <!-- Conversations are loaded here -->
-                    <div class="direct-chat-messages">
-                      <!-- Message. Default to the start -->
-                      <div class="direct-chat-msg">
-                        <div class="direct-chat-infos clearfix">
-                          <span class="direct-chat-name float-start"> Alexander Pierce </span>
-                          <span class="direct-chat-timestamp float-end"> 23 Jan 2:00 pm </span>
-                        </div>
-                        <!-- /.direct-chat-infos -->
-                        <img
-                          class="direct-chat-img"
-                          src="../../dist/assets/img/user1-128x128.jpg"
-                          alt="message user image"
-                        />
-                        <!-- /.direct-chat-img -->
-                        <div class="direct-chat-text">
-                          Is this template really for free? That's unbelievable!
-                        </div>
-                        <!-- /.direct-chat-text -->
-                      </div>
-                      <!-- /.direct-chat-msg -->
-                      <!-- Message to the end -->
-                      <div class="direct-chat-msg end">
-                        <div class="direct-chat-infos clearfix">
-                          <span class="direct-chat-name float-end"> Sarah Bullock </span>
-                          <span class="direct-chat-timestamp float-start"> 23 Jan 2:05 pm </span>
-                        </div>
-                        <!-- /.direct-chat-infos -->
-                        <img
-                          class="direct-chat-img"
-                          src="../../dist/assets/img/user3-128x128.jpg"
-                          alt="message user image"
-                        />
-                        <!-- /.direct-chat-img -->
-                        <div class="direct-chat-text">You better believe it!</div>
-                        <!-- /.direct-chat-text -->
-                      </div>
-                      <!-- /.direct-chat-msg -->
-                      <!-- Message. Default to the start -->
-                      <div class="direct-chat-msg">
-                        <div class="direct-chat-infos clearfix">
-                          <span class="direct-chat-name float-start"> Alexander Pierce </span>
-                          <span class="direct-chat-timestamp float-end"> 23 Jan 5:37 pm </span>
-                        </div>
-                        <!-- /.direct-chat-infos -->
-                        <img
-                          class="direct-chat-img"
-                          src="../../dist/assets/img/user1-128x128.jpg"
-                          alt="message user image"
-                        />
-                        <!-- /.direct-chat-img -->
-                        <div class="direct-chat-text">
-                          Working with AdminLTE on a great new app! Wanna join?
-                        </div>
-                        <!-- /.direct-chat-text -->
-                      </div>
-                      <!-- /.direct-chat-msg -->
-                      <!-- Message to the end -->
-                      <div class="direct-chat-msg end">
-                        <div class="direct-chat-infos clearfix">
-                          <span class="direct-chat-name float-end"> Sarah Bullock </span>
-                          <span class="direct-chat-timestamp float-start"> 23 Jan 6:10 pm </span>
-                        </div>
-                        <!-- /.direct-chat-infos -->
-                        <img
-                          class="direct-chat-img"
-                          src="../../dist/assets/img/user3-128x128.jpg"
-                          alt="message user image"
-                        />
-                        <!-- /.direct-chat-img -->
-                        <div class="direct-chat-text">I would love to.</div>
-                        <!-- /.direct-chat-text -->
-                      </div>
-                      <!-- /.direct-chat-msg -->
-                    </div>
-                    <!-- /.direct-chat-messages-->
-                    <!-- Contacts are loaded here -->
-                    <div class="direct-chat-contacts">
-                      <ul class="contacts-list">
-                        <li>
-                          <a href="#">
-                            <img
-                              class="contacts-list-img"
-                              src="../../dist/assets/img/user1-128x128.jpg"
-                              alt="User Avatar"
-                            />
-                            <div class="contacts-list-info">
-                              <span class="contacts-list-name">
-                                Count Dracula
-                                <small class="contacts-list-date float-end"> 2/28/2023 </small>
-                              </span>
-                              <span class="contacts-list-msg"> How have you been? I was... </span>
-                            </div>
-                            <!-- /.contacts-list-info -->
-                          </a>
-                        </li>
-                        <!-- End Contact Item -->
-                        <li>
-                          <a href="#">
-                            <img
-                              class="contacts-list-img"
-                              src="../../dist/assets/img/user7-128x128.jpg"
-                              alt="User Avatar"
-                            />
-                            <div class="contacts-list-info">
-                              <span class="contacts-list-name">
-                                Sarah Doe
-                                <small class="contacts-list-date float-end"> 2/23/2023 </small>
-                              </span>
-                              <span class="contacts-list-msg"> I will be waiting for... </span>
-                            </div>
-                            <!-- /.contacts-list-info -->
-                          </a>
-                        </li>
-                        <!-- End Contact Item -->
-                        <li>
-                          <a href="#">
-                            <img
-                              class="contacts-list-img"
-                              src="../../dist/assets/img/user3-128x128.jpg"
-                              alt="User Avatar"
-                            />
-                            <div class="contacts-list-info">
-                              <span class="contacts-list-name">
-                                Nadia Jolie
-                                <small class="contacts-list-date float-end"> 2/20/2023 </small>
-                              </span>
-                              <span class="contacts-list-msg"> I'll call you back at... </span>
-                            </div>
-                            <!-- /.contacts-list-info -->
-                          </a>
-                        </li>
-                        <!-- End Contact Item -->
-                        <li>
-                          <a href="#">
-                            <img
-                              class="contacts-list-img"
-                              src="../../dist/assets/img/user5-128x128.jpg"
-                              alt="User Avatar"
-                            />
-                            <div class="contacts-list-info">
-                              <span class="contacts-list-name">
-                                Nora S. Vans
-                                <small class="contacts-list-date float-end"> 2/10/2023 </small>
-                              </span>
-                              <span class="contacts-list-msg"> Where is your new... </span>
-                            </div>
-                            <!-- /.contacts-list-info -->
-                          </a>
-                        </li>
-                        <!-- End Contact Item -->
-                        <li>
-                          <a href="#">
-                            <img
-                              class="contacts-list-img"
-                              src="../../dist/assets/img/user6-128x128.jpg"
-                              alt="User Avatar"
-                            />
-                            <div class="contacts-list-info">
-                              <span class="contacts-list-name">
-                                John K.
-                                <small class="contacts-list-date float-end"> 1/27/2023 </small>
-                              </span>
-                              <span class="contacts-list-msg"> Can I take a look at... </span>
-                            </div>
-                            <!-- /.contacts-list-info -->
-                          </a>
-                        </li>
-                        <!-- End Contact Item -->
-                        <li>
-                          <a href="#">
-                            <img
-                              class="contacts-list-img"
-                              src="../../dist/assets/img/user8-128x128.jpg"
-                              alt="User Avatar"
-                            />
-                            <div class="contacts-list-info">
-                              <span class="contacts-list-name">
-                                Kenneth M.
-                                <small class="contacts-list-date float-end"> 1/4/2023 </small>
-                              </span>
-                              <span class="contacts-list-msg"> Never mind I found... </span>
-                            </div>
-                            <!-- /.contacts-list-info -->
-                          </a>
-                        </li>
-                        <!-- End Contact Item -->
-                      </ul>
-                      <!-- /.contacts-list -->
-                    </div>
-                    <!-- /.direct-chat-pane -->
-                  </div>
-                  <!-- /.card-body -->
-                  <div class="card-footer">
-                    <form action="#" method="post">
-                      <div class="input-group">
-                        <input
-                          type="text"
-                          name="message"
-                          placeholder="Type Message ..."
-                          class="form-control"
-                        />
-                        <span class="input-group-append">
-                          <button type="button" class="btn btn-primary">Send</button>
-                        </span>
-                      </div>
-                    </form>
-                  </div>
-                  <!-- /.card-footer-->
-                </div>
-                <!-- /.direct-chat -->
-              </div>
-              <!-- /.Start col -->
-              <!-- Start col -->
-              <div class="col-lg-5 connectedSortable">
-                <div class="card text-white bg-primary bg-gradient border-primary mb-4">
-                  <div class="card-header border-0">
-                    <h3 class="card-title">Sales Value</h3>
-                    <div class="card-tools">
-                      <button
-                        type="button"
-                        class="btn btn-primary btn-sm"
-                        data-lte-toggle="card-collapse"
-                      >
-                        <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
-                        <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="card-body"><div id="world-map" style="height: 220px"></div></div>
-                  <div class="card-footer border-0">
                     <!--begin::Row-->
                     <div class="row">
-                      <div class="col-4 text-center">
-                        <div id="sparkline-1" class="text-dark"></div>
-                        <div class="text-white">Visitors</div>
-                      </div>
-                      <div class="col-4 text-center">
-                        <div id="sparkline-2" class="text-dark"></div>
-                        <div class="text-white">Online</div>
-                      </div>
-                      <div class="col-4 text-center">
-                        <div id="sparkline-3" class="text-dark"></div>
-                        <div class="text-white">Sales</div>
-                      </div>
+                      <div class="col-12"><div id="pie-chart"></div></div>
+                      <!-- /.col -->
                     </div>
                     <!--end::Row-->
                   </div>
+                  <!-- /.card-body -->
+<!-- 
+                  <div class="card-footer p-0">
+                    <ul class="nav nav-pills flex-column">
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          United States of America
+                          <span class="float-end text-danger">
+                            <i class="bi bi-arrow-down fs-7"></i>
+                            12%
+                          </span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          India
+                          <span class="float-end text-success">
+                            <i class="bi bi-arrow-up fs-7"></i> 4%
+                          </span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          China
+                          <span class="float-end text-info">
+                            <i class="bi bi-arrow-left fs-7"></i> 0%
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+ -->
+
+                  <!-- /.footer -->
                 </div>
+                <!-- /.card -->
+                
+
+
               </div>
-              <!-- /.Start col -->
+              <!-- /.col -->
             </div>
-            <!-- /.row (main row) -->
+            <!--end::Row-->
           </div>
           <!--end::Container-->
         </div>
@@ -447,7 +428,210 @@
 
 
 
+
 {% endblock %}
 
+
+    
+{% block css_script %}
+
+    <!-- apexcharts -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
+      integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0="
+      crossorigin="anonymous"
+    />
+
+
+{% endblock %}
+
+
+{% block javascript %}
+
+    <script>
+      const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+      const Default = {
+        scrollbarTheme: 'os-theme-light',
+        scrollbarAutoHide: 'leave',
+        scrollbarClickScroll: true,
+      };
+      document.addEventListener('DOMContentLoaded', function () {
+        const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+        if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
+          OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+            scrollbars: {
+              theme: Default.scrollbarTheme,
+              autoHide: Default.scrollbarAutoHide,
+              clickScroll: Default.scrollbarClickScroll,
+            },
+          });
+        }
+      });
+    </script>
+    <!--end::OverlayScrollbars Configure-->
+    <!-- OPTIONAL SCRIPTS -->
+    <!-- apexcharts -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
+      integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
+      // IT'S ALL JUST JUNK FOR DEMO
+      // ++++++++++++++++++++++++++++++++++++++++++
+
+      /* apexcharts
+       * -------
+       * Here we will create a few charts using apexcharts
+       */
+
+      //-----------------------
+      // - MONTHLY SALES CHART -
+      //-----------------------
+
+      const sales_chart_options = {
+        series: [
+          {
+            name: 'Digital Goods',
+            data: [28, 48, 40, 19, 86, 27, 90],
+          },
+          {
+            name: 'Electronics',
+            data: [65, 59, 80, 81, 56, 55, 40],
+          },
+        ],
+        chart: {
+          height: 180,
+          type: 'area',
+          toolbar: {
+            show: false,
+          },
+        },
+        legend: {
+          show: false,
+        },
+        colors: ['#0d6efd', '#20c997'],
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'smooth',
+        },
+        xaxis: {
+          type: 'datetime',
+          categories: [
+            '2023-01-01',
+            '2023-02-01',
+            '2023-03-01',
+            '2023-04-01',
+            '2023-05-01',
+            '2023-06-01',
+            '2023-07-01',
+          ],
+        },
+        tooltip: {
+          x: {
+            format: 'MMMM yyyy',
+          },
+        },
+      };
+
+      const sales_chart = new ApexCharts(
+        document.querySelector('#sales-chart'),
+        sales_chart_options,
+      );
+      sales_chart.render();
+
+      //---------------------------
+      // - END MONTHLY SALES CHART -
+      //---------------------------
+
+      function createSparklineChart(selector, data) {
+        const options = {
+          series: [{ data }],
+          chart: {
+            type: 'line',
+            width: 150,
+            height: 30,
+            sparkline: {
+              enabled: true,
+            },
+          },
+          colors: ['var(--bs-primary)'],
+          stroke: {
+            width: 2,
+          },
+          tooltip: {
+            fixed: {
+              enabled: false,
+            },
+            x: {
+              show: false,
+            },
+            y: {
+              title: {
+                formatter: function (seriesName) {
+                  return '';
+                },
+              },
+            },
+            marker: {
+              show: false,
+            },
+          },
+        };
+
+        const chart = new ApexCharts(document.querySelector(selector), options);
+        chart.render();
+      }
+
+      const table_sparkline_1_data = [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54];
+      const table_sparkline_2_data = [12, 56, 21, 39, 73, 45, 64, 52, 36, 59, 44];
+      const table_sparkline_3_data = [15, 46, 21, 59, 33, 15, 34, 42, 56, 19, 64];
+      const table_sparkline_4_data = [30, 56, 31, 69, 43, 35, 24, 32, 46, 29, 64];
+      const table_sparkline_5_data = [20, 76, 51, 79, 53, 35, 54, 22, 36, 49, 64];
+      const table_sparkline_6_data = [5, 36, 11, 69, 23, 15, 14, 42, 26, 19, 44];
+      const table_sparkline_7_data = [12, 56, 21, 39, 73, 45, 64, 52, 36, 59, 74];
+
+      createSparklineChart('#table-sparkline-1', table_sparkline_1_data);
+      createSparklineChart('#table-sparkline-2', table_sparkline_2_data);
+      createSparklineChart('#table-sparkline-3', table_sparkline_3_data);
+      createSparklineChart('#table-sparkline-4', table_sparkline_4_data);
+      createSparklineChart('#table-sparkline-5', table_sparkline_5_data);
+      createSparklineChart('#table-sparkline-6', table_sparkline_6_data);
+      createSparklineChart('#table-sparkline-7', table_sparkline_7_data);
+
+      //-------------
+      // - PIE CHART -
+      //-------------
+
+      const pie_chart_options = {
+        series: [700, 500, 400, 600],
+        chart: {
+          type: 'donut',
+          height: 300,
+          height:300,
+        },
+        labels: ['North Cotabato', 'South Cotabato', 'Sultan Kudarat', 'Sarangani'],
+        dataLabels: {
+          enabled: true,
+        },
+        colors: ['#0d6efd', '#20c997', '#ffc107', '#d63384'],
+        
+      };
+
+      const pie_chart = new ApexCharts(document.querySelector('#pie-chart'), pie_chart_options);
+      pie_chart.render();
+
+      //-----------------
+      // - END PIE CHART -
+      //-----------------
+    </script>
+    <!--end::Script-->
+
+
+{% endblock %}
 
 
