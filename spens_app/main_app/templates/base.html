@@ -343,7 +343,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="./widgets/info-box.html" class="nav-link">
+                    <a href="{% url 'waitlist_page' %}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>Waitlist</p>
                     </a>
@@ -391,13 +391,6 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Level 2</p>
-                    </a>
-                  </li>
-
                   <li class="nav-item">
                     <a href="#" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
@@ -554,6 +547,12 @@
 <!-- ----------------------------------------------------------------------------- -->
 
 
+{% block models %}
+
+{% endblock %}
+
+
+<!-- ------------------------------------------------------------------------------ -->
       </main>
       <!--end::App Main-->
       <!--begin::Footer-->

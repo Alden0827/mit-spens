@@ -1,0 +1,522 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{app_program}} {{app_name}} | Beneficiary List
+{% endblock %}
+
+{% block content %}
+<!-- v4 -->
+<!-- app-content-header -->
+<!--end::App Content-->
+
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+   
+
+    <!-- Content Header (Page header) -->
+    
+
+        <!--begin::App Content Header-->
+        <div class="app-content-header">
+          <!--begin::Container-->
+          <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+              <div class="col-sm-6"><h3 class="mb-0">Beneficiary Profiling</h3></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                </ol>
+              </div>
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Container-->
+        </div>
+
+<!-- 
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Project Detail</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Project Detail</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+ -->
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+
+<!-- 
+        <div class="card-header">
+          <h3 class="card-title">Projects Detail</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+ -->
+
+
+
+
+
+
+
+
+
+        <div class="card-body">
+          <div class="row">
+
+
+
+            <div class="col-12 col-md-12 col-lg-9 order-2 order-md-1">
+              <div class="row">
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted">Number of Active Beneficiary</span>
+                      <span class="info-box-number text-center text-muted mb-0">2300</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted">Total Number of Waitlisted</span>
+                      <span class="info-box-number text-center text-muted mb-0">2000</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted">Total Number of Delisted</span>
+                      <span class="info-box-number text-center text-muted mb-0">20</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                    <!-- Search Box Section -->
+                    <div class="card card-primary card-outline mb-4">
+                        <div class="card-header">
+                            <h3 class="card-title">Advance Search </h3>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="row g-3">
+                                    <!-- Province Dropdown -->
+                                    <div class="col-md-4">
+                                            <label for="province" class="form-label">Province</label>
+                                            <select class="form-select" id="province">
+                                                <option value="">Select Province</option>
+                                                <!-- Add options dynamically -->
+                                            </select>
+                                    </div>
+                                    
+                                    <!-- Municipality Dropdown -->
+                                    <div class="col-md-4">
+                                            <label for="municipality" class="form-label">Municipality</label>
+                                            <select class="form-select" id="municipality">
+                                                <option value="">Select Municipality</option>
+                                                <!-- Add options dynamically -->
+                                            </select>
+                                    </div>
+                                    
+                                    <!-- Barangay Dropdown -->
+                                    <div class="col-md-4">
+                                           <label for="barangay" class="form-label">Barangay</label>
+                                            <select class="form-select" id="barangay">
+                                                <option value="">Select Barangay</option>
+                                                <!-- Add options dynamically -->
+                                            </select>
+                                    </div>
+
+                                    <!-- Philsys ID Textbox -->
+                                    <div class="col-md-4">
+                                            <label for="philsys_id" class="form-label">PhilSys ID</label>
+                                            <input type="text" class="form-control" id="philsys_id" placeholder="Enter PhilSys ID">
+                                    </div>
+                                    
+                                    <!-- Beneficiary Name Textbox -->
+                                    <div class="col-md-8">
+                                            <label for="beneficiary_name" class="form-label">Beneficiary Name</label>
+                                            <input type="text" class="form-control" id="beneficiary_name" placeholder="Enter Beneficiary Name">
+                                    </div>
+                                        
+
+
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                          <button class="btn btn-info pu" type="submit">
+                              <i class="bi bi-search"></i> Search
+                          </button>
+                        </div>
+
+
+                    </div>
+
+                    <!-- DataTable Section -->
+                    <div class="card card-primary card-outline ">
+                        <div class="card-header">
+                            <h3 class="card-title">Senior Citizens List</h3>
+                            <button type="button" class="btn btn-primary btn-sm float-end new-entry">
+                                <i class="bi bi-plus-lg"></i> New Entry
+                            </button>                  
+                        </div>
+                        <div class="card-body">
+                            <table id="seniorTable" class="table table-sm table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Senior Citizen ID</th>
+                                        <th>Full Name</th>
+                                        <th>Age</th>
+                                        <th>Sex</th>
+                                        <th>Status</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Example Row -->
+                                    <tr>
+                                        <td>SC12345</td>
+                                        <td>Juan Dela Cruz</td>
+                                        <td>70</td>
+                                        <td>Male</td>
+                                        <td>Active</td>
+                                          <td>
+                                              <button class="btn btn-warning btn-sm" title="Edit">
+                                                  <i class="bi bi-pencil-square"></i>
+                                              </button>
+                                              <button class="btn btn-danger btn-sm" title="Delete">
+                                                  <i class="bi bi-trash"></i>
+                                              </button>
+                                              <button class="btn btn-info btn-sm" title="Change Status">
+                                                  <i class="bi bi-arrow-repeat"></i>
+                                              </button>
+                                          </td>
+                                    </tr>
+                                    <!-- More rows will be added dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+              </div>
+            </div>
+
+
+            <div class="col-12 col-md-12 col-lg-3 order-1 order-md-2">
+              <h3 class="text-primary"><i class="fas fa-paint-brush"></i> Info!</h3>
+              <p class="text-muted">This page provides an overview of the beneficiary profiling system. Users can perform an advanced search by selecting criteria like province, municipality, and barangay, or by entering specific details such as PhilSys ID or beneficiary name. The page also features a list of senior citizens, showing details like their ID, full name, age, sex, and current status (e.g., active). This helps in efficiently managing and tracking beneficiary information.</p>
+              <br>
+<!-- 
+              <div class="text-muted">
+                <p class="text-sm">Client Company
+                  <b class="d-block">Deveint Inc</b>
+                </p>
+                <p class="text-sm">Project Leader
+                  <b class="d-block">Tony Chicken</b>
+                </p>
+              </div>
+
+ -->
+
+<!--  
+              <div class="text-center mt-5 mb-3">
+                <a href="#" class="btn btn-sm btn-primary">Add files</a>
+                <a href="#" class="btn btn-sm btn-warning">Report contact</a>
+              </div>
+
+ -->
+
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+
+
+
+
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+{% endblock %}
+
+
+    
+{% block css_script %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+{% endblock %}
+
+
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#seniorTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "responsive": true,
+            "columnDefs": [
+                { "orderable": false, "targets": 5 } // Disable sorting for 'Options' column
+            ]
+        });
+        $(".new-entry").on("click", function () {
+            $("#beneficiaryModal").modal("show"); // Open the modal
+        });
+        // compute age
+        $("#birth_date").on("change", function () {
+            let birthDate = new Date($(this).val());
+            let today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            let monthDiff = today.getMonth() - birthDate.getMonth();
+            let dayDiff = today.getDate() - birthDate.getDate();
+
+            // Adjust age if birthdate hasn't occurred yet this year
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                age--;
+            }
+
+            console.log(age);
+            if (age >= 60) {
+                $("#birth_age").val(age);
+                $("#age_error").text("Age");
+            } else {
+                $("#birth_age").val("0");
+                $("#age_error").text("Error: Age must be 60 or above.");
+            }
+        });
+    });
+</script>
+
+{% endblock %}
+
+
+{% block models %}
+
+
+
+  <!-- Bootstrap Modal -->
+  <div class="modal fade" id="beneficiaryModal" style="background: rgba(0, 0, 0, 0.8);" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="beneficiaryModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-body">
+
+                <div class="card card-outline card-danger">
+                  <div class="card-header">
+                    <h3 class="card-title">Beneficiary Information</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-lte-toggle="card-maximize">
+                        <i data-lte-icon="maximize" class="bi bi-fullscreen"></i>
+                        <i data-lte-icon="minimize" class="bi bi-fullscreen-exit"></i>
+                      </button>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- /.card-tools -->
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    
+                  <form id="beneficiaryForm" method="POST">
+                      {% csrf_token %}
+                      
+                      <div class="row">
+                          <input type="hidden" class="form-control" id="beneficiary_id" name="beneficiary_id" required>
+                          
+                          <div class="col-md-4">
+                              <label for="philsys_id" class="form-label">PhilSys ID</label>
+                              <input type="text" class="form-control" id="philsys_id" name="philsys_id">
+                          </div>
+                          <div class="col-md-4">
+                              <label for="senior_citizen_id" class="form-label">Senior Citizen ID</label>
+                              <input type="text" class="form-control" id="senior_citizen_id" name="senior_citizen_id">
+                          </div>
+                          <div class="col-md-4">
+                              <label for="biometric_fp disabled" class="form-label">Biometric Fingerprint</label>
+                              <input type="text" class="form-control" id="biometric_fp" name="biometric_fp">
+                          </div>
+                      </div>
+
+
+                      <div class="row mt-2">
+                          <div class="col-md-4">
+                              <label for="first_name" class="form-label">First Name</label>
+                              <input type="text" class="form-control" id="first_name" name="first_name" required>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="middle_name" class="form-label">Middle Name</label>
+                              <input type="text" class="form-control" id="middle_name" name="middle_name">
+                          </div>
+                          <div class="col-md-4">
+                              <label for="last_name" class="form-label">Last Name</label>
+                              <input type="text" class="form-control" id="last_name" name="last_name" required>
+                          </div>
+                      </div>
+
+                      <div class="row mt-2">
+                          <div class="col-md-6">
+                              <label for="birth_date" class="form-label">Birth Date</label>
+                              <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+                          </div>
+                          <div class="col-md-3">
+                              <label for="birth_age" class="form-label">Age</label>
+                              <input type="number" min="60" max="140" value="60" class="form-control " id="birth_age" name="birth_age" required disabled>
+                          </div>
+                          <div class="col-md-3">
+                              <label for="sex" class="form-label">Sex</label>
+                              <select class="form-select" id="sex" name="sex" required>
+                                  <option value="Male">Male</option>
+                                  <option value="Female">Female</option>
+                              </select>
+                          </div>
+                      </div>
+
+                      <div class="row mt-2">
+                          <div class="col-md-4">
+                              <label for="address_psgc" class="form-label">Province</label>
+                              <select class="form-select" id="address_psgc" name="address_psgc">
+                                  <option value="">Select Province</option>
+                                  {% for province in provinces %}
+                                      <option value="{{ province.id }}">{{ province.name }}</option>
+                                  {% endfor %}
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="address_psgc" class="form-label">Municipality/City</label>
+                              <select class="form-select" id="address_psgc" name="address_psgc">
+                                  <option value="">Please select</option>
+                                  {% for municipality in municipalities %}
+                                      <option value="{{ municipality.id }}">{{ municipality.name }}</option>
+                                  {% endfor %}
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="address_psgc" class="form-label">Barangay</label>
+                              <select class="form-select" id="address_psgc" name="address_psgc">
+                                  <option value="">Select Barangay</option>
+                                  {% for barangay in barangays %}
+                                      <option value="{{ barangay.id }}">{{ barangay.name }}</option>
+                                  {% endfor %}
+                              </select>
+                          </div>
+
+                      </div>
+                      <div class="row mt-2">
+                          <div class="col-md-12">
+                              <label for="address" class="form-label">Block/Lot/Street/Purok/etc</label>
+                              <textarea class="form-control" id="address" name="address" required></textarea>
+                          </div>
+                      </div>
+
+                      <div class="row mt-2">
+                          <div class="col-md-6">
+                              <label for="contact_number" class="form-label">Contact Number</label>
+                              <input type="text" class="form-control" id="contact_number" name="contact_number">
+                          </div>
+                          <div class="col-md-6">
+                              <label for="email" class="form-label">Email</label>
+                              <input type="email" class="form-control" id="email" name="email">
+                          </div>
+                      </div>
+
+                      <div class="row mt-2">
+                          <div class="col-md-6">
+                              <label for="status" class="form-label">Status</label>
+                              <select class="form-select" id="status" name="status" required>
+                                  <option value="Active">Active</option>
+                                  <option value="Inactive">Inactive</option>
+                              </select>
+                          </div>
+                          <div class="col-md-6">
+                              <label for="date_registered" class="form-label">Date Registered</label>
+                              <input type="date" class="form-control" id="date_registered" name="date_registered">
+                          </div>
+                      </div>
+
+                      <hr class="mt-4">
+                      <h5>Pantawid Beneficiary</h5>
+
+                      <div class="row mt-2">
+                          <div class="col-md-6">
+                              <label for="is_pantawid" class="form-label">Is Pantawid Beneficiary?</label>
+                              <select class="form-select" id="is_pantawid" name="is_pantawid">
+                                  <option value="False">No</option>
+                                  <option value="True">Yes</option>
+                              </select>
+                          </div>
+                          <div class="col-md-6">
+                              <label for="pantawid_hhid" class="form-label">Pantawid HHID</label>
+                              <input type="text" class="form-control" id="pantawid_hhid" name="pantawid_hhid">
+                          </div>
+                      </div>
+
+                      <div class="row mt-2">
+                          <div class="col-md-6">
+                              <label for="pantawid_lowb" class="form-label">Pantawid Level of Well-Being</label>
+                              <select class="form-select" id="pantawid_lowb" name="pantawid_lowb">
+                                  <option value="">Select Level</option>
+                                  <option value="1">Survival</option>
+                                  <option value="2">Subsistence</option>
+                                  <option value="3">Self-Sufficient</option>
+                              </select>
+                          </div>
+                      </div>
+
+                      <div class="modal-footer mt-4">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Save Beneficiary</button>
+                      </div>
+                  </form>
+
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+{% endblock %}

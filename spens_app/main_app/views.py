@@ -73,7 +73,15 @@ def bdm_page(request):
     first_name = request.user.first_name
     last_name = request.user.last_name
     fullname = first_name + ' ' + last_name
-    return render(request, "test.html", {'fullname': fullname})
+    return render(request, "profiling.html", {'fullname': fullname})
+
+@login_required
+def waitlist_page(request):
+    first_name = request.user.first_name
+    last_name = request.user.last_name
+    fullname = first_name + ' ' + last_name
+    return render(request, "blank.html", {'fullname': fullname})
+
 
 @login_required
 def user_activation():

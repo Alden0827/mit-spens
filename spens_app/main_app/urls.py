@@ -9,7 +9,9 @@ urlpatterns = [
     path("for_activation/", views.for_activation, name="for_activation"),  # Activation page URL
     path('logout/', LogoutView.as_view(next_page='/login/'), name='logout'),  # Redirect to the login page after logout
     path("", views.main_page, name="main_page"),
-    path("/beneficiaries", views.bdm_page, name="bdm_page"),
+    path("profiling/", views.bdm_page, name="bdm_page"),
+    path("waitlist/", views.waitlist_page, name="waitlist_page"),
+
 
 ]
 
