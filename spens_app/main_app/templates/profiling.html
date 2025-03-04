@@ -187,19 +187,22 @@
                     <div class="card card-primary card-outline ">
                         <div class="card-header">
                             <h3 class="card-title">Senior Citizens List</h3>
-                            <button type="button" class="btn btn-primary btn-sm float-end new-entry">
+                            <button type="button" class="btn btn-primary btn-sm float-end add-entry">
                                 <i class="bi bi-plus-lg"></i> New Entry
                             </button>                  
                         </div>
                         <div class="card-body">
+
+
+
                             <table id="seniorTable" class="table table-sm table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Senior Citizen ID</th>
                                         <th>Full Name</th>
-                                        <th>Age</th>
-                                        <th>Sex</th>
-                                        <th>Status</th>
+                                        <th class="d-none d-md-table-cell">Age</th>
+                                        <th class="d-none d-md-table-cell">Sex</th>
+                                        <th class="d-none d-md-table-cell">Status</th>
                                         <th>Options</th>
                                     </tr>
                                 </thead>
@@ -208,17 +211,17 @@
                                     <tr>
                                         <td>SC12345</td>
                                         <td>Juan Dela Cruz</td>
-                                        <td>70</td>
-                                        <td>Male</td>
-                                        <td>Active</td>
+                                          <td class="d-none d-md-table-cell">70</td>
+                                          <td class="d-none d-md-table-cell">Male</td>
+                                          <td class="d-none d-md-table-cell">Active</td>
                                           <td>
-                                              <button class="btn btn-warning btn-sm" title="Edit">
+                                              <button class="btn btn-warning btn-sm edit-entry" title="Edit">
                                                   <i class="bi bi-pencil-square"></i>
                                               </button>
-                                              <button class="btn btn-danger btn-sm" title="Delete">
+                                              <button class="btn btn-danger btn-sm delete-entry" title="Delete">
                                                   <i class="bi bi-trash"></i>
                                               </button>
-                                              <button class="btn btn-info btn-sm" title="Change Status">
+                                              <button class="btn btn-info btn-sm " title="Update History">
                                                   <i class="bi bi-arrow-repeat"></i>
                                               </button>
                                           </td>
@@ -226,6 +229,10 @@
                                     <!-- More rows will be added dynamically -->
                                 </tbody>
                             </table>
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -289,6 +296,8 @@
 {% block javascript %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function() {
         $('#seniorTable').DataTable({
@@ -301,8 +310,44 @@
                 { "orderable": false, "targets": 5 } // Disable sorting for 'Options' column
             ]
         });
-        $(".new-entry").on("click", function () {
+
+        $("#btnBeneEditorFormEdit").click(function () {
+            $(".editable-form-control").prop("disabled", false); // Enable all fields
+            $("#saveBtn").prop("disabled", false); // Enable Save button
+            $(".editable-form-control:first").focus(); 
+        });
+
+        $(document).on('click','.edit-entry',function(e) {
+            e.preventDefault();
             $("#beneficiaryModal").modal("show"); // Open the modal
+            $("#beneficiaryEditorForm")[0].reset();
+            $('.editable-form-control').prop("disabled", true);
+        })
+
+        $(document).on('click','.add-entry',function(e) {
+            e.preventDefault();
+            $("#beneficiaryModal").modal("show"); // Open the modal
+            $("#beneficiaryEditorForm")[0].reset();
+            // $(".editable-form-control:first").focus(); 
+        })
+        $(".delete-entry").click(function (e) {
+            e.preventDefault(); // Prevent default action
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You are about to delete this entry. Action cannot be undone!",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Perform delete action here (e.g., send an AJAX request or remove the row)
+                    Swal.fire("Deleted!", "The entry has been deleted.", "success");
+                }
+            });
         });
         // compute age
         $("#birth_date").on("change", function () {
@@ -337,15 +382,18 @@
 
 
   <!-- Bootstrap Modal -->
-  <div class="modal fade" id="beneficiaryModal" style="background: rgba(0, 0, 0, 0.8);" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="beneficiaryModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-          <div class="modal-content">
+  <div class="modal fade" id="beneficiaryModal" style="background: rgba(0, 0, 0, 0.8);" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="beneficiaryModalLabel"  aria-hidden="true">
+      <div class="modal-dialog modal-lg" >
+          <div class="modal-content" style="background: rgba(0, 0, 0, 0.0);">
               <div class="modal-body">
 
                 <div class="card card-outline card-danger">
                   <div class="card-header">
                     <h3 class="card-title">Beneficiary Information</h3>
                     <div class="card-tools">
+                      <button type="button" class="btn btn-tool" id="btnBeneEditorFormEdit">
+                          <i class="bi bi-pencil-square"></i> <!-- Bootstrap pencil icon for edit -->
+                      </button>
                       <button type="button" class="btn btn-tool" data-lte-toggle="card-maximize">
                         <i data-lte-icon="maximize" class="bi bi-fullscreen"></i>
                         <i data-lte-icon="minimize" class="bi bi-fullscreen-exit"></i>
@@ -357,7 +405,7 @@
                   <!-- /.card-header -->
                   <div class="card-body">
                     
-                  <form id="beneficiaryForm" method="POST">
+                  <form id="beneficiaryEditorForm" method="POST" disabled>
                       {% csrf_token %}
                       
                       <div class="row">
@@ -365,15 +413,15 @@
                           
                           <div class="col-md-4">
                               <label for="philsys_id" class="form-label">PhilSys ID</label>
-                              <input type="text" class="form-control" id="philsys_id" name="philsys_id">
+                              <input type="text" class="form-control editable-form-control" id="philsys_id" name="philsys_id" >
                           </div>
                           <div class="col-md-4">
                               <label for="senior_citizen_id" class="form-label">Senior Citizen ID</label>
-                              <input type="text" class="form-control" id="senior_citizen_id" name="senior_citizen_id">
+                              <input type="text" class="form-control editable-form-control" id="senior_citizen_id" name="senior_citizen_id" >
                           </div>
                           <div class="col-md-4">
-                              <label for="biometric_fp disabled" class="form-label">Biometric Fingerprint</label>
-                              <input type="text" class="form-control" id="biometric_fp" name="biometric_fp">
+                              <label for="biometric_fp disabled" class="form-label">Biometric Data(fp)</label>
+                              <input type="text" class="form-control" id="biometric_fp" name="biometric_fp" disabled>
                           </div>
                       </div>
 
@@ -381,22 +429,22 @@
                       <div class="row mt-2">
                           <div class="col-md-4">
                               <label for="first_name" class="form-label">First Name</label>
-                              <input type="text" class="form-control" id="first_name" name="first_name" required>
+                              <input type="text" class="form-control editable-form-control" id="first_name" name="first_name" required>
                           </div>
                           <div class="col-md-4">
                               <label for="middle_name" class="form-label">Middle Name</label>
-                              <input type="text" class="form-control" id="middle_name" name="middle_name">
+                              <input type="text" class="form-control editable-form-control" id="middle_name" name="middle_name">
                           </div>
                           <div class="col-md-4">
                               <label for="last_name" class="form-label">Last Name</label>
-                              <input type="text" class="form-control" id="last_name" name="last_name" required>
+                              <input type="text" class="form-control editable-form-control" id="last_name" name="last_name" required>
                           </div>
                       </div>
 
                       <div class="row mt-2">
                           <div class="col-md-6">
                               <label for="birth_date" class="form-label">Birth Date</label>
-                              <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+                              <input type="date" class="form-control editable-form-control" id="birth_date" name="birth_date" required>
                           </div>
                           <div class="col-md-3">
                               <label for="birth_age" class="form-label">Age</label>
@@ -404,7 +452,7 @@
                           </div>
                           <div class="col-md-3">
                               <label for="sex" class="form-label">Sex</label>
-                              <select class="form-select" id="sex" name="sex" required>
+                              <select class="form-select editable-form-control" id="sex" name="sex" required>
                                   <option value="Male">Male</option>
                                   <option value="Female">Female</option>
                               </select>
@@ -414,7 +462,7 @@
                       <div class="row mt-2">
                           <div class="col-md-4">
                               <label for="address_psgc" class="form-label">Province</label>
-                              <select class="form-select" id="address_psgc" name="address_psgc">
+                              <select class="form-select editable-form-control" id="address_psgc" name="address_psgc">
                                   <option value="">Select Province</option>
                                   {% for province in provinces %}
                                       <option value="{{ province.id }}">{{ province.name }}</option>
@@ -423,7 +471,7 @@
                           </div>
                           <div class="col-md-4">
                               <label for="address_psgc" class="form-label">Municipality/City</label>
-                              <select class="form-select" id="address_psgc" name="address_psgc">
+                              <select class="form-select editable-form-control" id="address_psgc" name="address_psgc">
                                   <option value="">Please select</option>
                                   {% for municipality in municipalities %}
                                       <option value="{{ municipality.id }}">{{ municipality.name }}</option>
@@ -432,7 +480,7 @@
                           </div>
                           <div class="col-md-4">
                               <label for="address_psgc" class="form-label">Barangay</label>
-                              <select class="form-select" id="address_psgc" name="address_psgc">
+                              <select class="form-select editable-form-control" id="address_psgc" name="address_psgc">
                                   <option value="">Select Barangay</option>
                                   {% for barangay in barangays %}
                                       <option value="{{ barangay.id }}">{{ barangay.name }}</option>
@@ -444,32 +492,32 @@
                       <div class="row mt-2">
                           <div class="col-md-12">
                               <label for="address" class="form-label">Block/Lot/Street/Purok/etc</label>
-                              <textarea class="form-control" id="address" name="address" required></textarea>
+                              <textarea class="form-control editable-form-control" id="address" name="address" required></textarea>
                           </div>
                       </div>
 
                       <div class="row mt-2">
                           <div class="col-md-6">
                               <label for="contact_number" class="form-label">Contact Number</label>
-                              <input type="text" class="form-control" id="contact_number" name="contact_number">
+                              <input type="text" class="form-control editable-form-control" id="contact_number" name="contact_number">
                           </div>
                           <div class="col-md-6">
                               <label for="email" class="form-label">Email</label>
-                              <input type="email" class="form-control" id="email" name="email">
+                              <input type="email" class="form-control editable-form-control" id="email" name="email">
                           </div>
                       </div>
 
                       <div class="row mt-2">
                           <div class="col-md-6">
                               <label for="status" class="form-label">Status</label>
-                              <select class="form-select" id="status" name="status" required>
+                              <select class="form-select editable-form-control" id="status" name="status" required>
                                   <option value="Active">Active</option>
                                   <option value="Inactive">Inactive</option>
                               </select>
                           </div>
                           <div class="col-md-6">
                               <label for="date_registered" class="form-label">Date Registered</label>
-                              <input type="date" class="form-control" id="date_registered" name="date_registered">
+                              <input type="date" class="form-control editable-form-control" id="date_registered" name="date_registered">
                           </div>
                       </div>
 
@@ -477,23 +525,20 @@
                       <h5>Pantawid Beneficiary</h5>
 
                       <div class="row mt-2">
-                          <div class="col-md-6">
+                          <div class="col-md-3">
                               <label for="is_pantawid" class="form-label">Is Pantawid Beneficiary?</label>
-                              <select class="form-select" id="is_pantawid" name="is_pantawid">
+                              <select class="form-select editable-form-control" id="is_pantawid" name="is_pantawid">
                                   <option value="False">No</option>
                                   <option value="True">Yes</option>
                               </select>
                           </div>
                           <div class="col-md-6">
                               <label for="pantawid_hhid" class="form-label">Pantawid HHID</label>
-                              <input type="text" class="form-control" id="pantawid_hhid" name="pantawid_hhid">
+                              <input type="text" class="form-control editable-form-control" id="pantawid_hhid" name="pantawid_hhid">
                           </div>
-                      </div>
-
-                      <div class="row mt-2">
-                          <div class="col-md-6">
-                              <label for="pantawid_lowb" class="form-label">Pantawid Level of Well-Being</label>
-                              <select class="form-select" id="pantawid_lowb" name="pantawid_lowb">
+                          <div class="col-md-3">
+                              <label for="pantawid_lowb" class="form-label">Level of Well-Being</label>
+                              <select class="form-select editable-form-control" id="pantawid_lowb" name="pantawid_lowb">
                                   <option value="">Select Level</option>
                                   <option value="1">Survival</option>
                                   <option value="2">Subsistence</option>
@@ -503,8 +548,8 @@
                       </div>
 
                       <div class="modal-footer mt-4">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary">Save Beneficiary</button>
+                          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                          <button type="submit" class="btn btn-primary editable-form-control">Save</button>
                       </div>
                   </form>
 

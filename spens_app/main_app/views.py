@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm
 from django.contrib.auth.models import User
+
 
 
 def user_login(request):
@@ -82,9 +83,22 @@ def waitlist_page(request):
     fullname = first_name + ' ' + last_name
     return render(request, "blank.html", {'fullname': fullname})
 
+@login_required
+def empty_page(request):
+    first_name = request.user.first_name
+    last_name = request.user.last_name
+    fullname = first_name + ' ' + last_name
+    return render(request, "blank.html", {'fullname': fullname})
+
+
 
 @login_required
 def user_activation():
     user = User.objects.get(username="username_here")
     user.is_active = True
     user.save()
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect('user_login') 
