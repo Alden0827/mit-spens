@@ -90,7 +90,7 @@ def waitlist_page(request):
     first_name = request.user.first_name
     last_name = request.user.last_name
     fullname = first_name + ' ' + last_name
-    return render(request, "blank.html", {'fullname': fullname})
+    return render(request, "waitlist.html", {'fullname': fullname})
 
 @login_required
 def empty_page(request):

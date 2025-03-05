@@ -24,7 +24,7 @@
           <div class="container-fluid">
             <!--begin::Row-->
             <div class="row">
-              <div class="col-sm-6"><h3 class="mb-0">Beneficiary Profiling</h3></div>
+              <div class="col-sm-6"><h3 class="mb-0">Waitlist Encoding</h3></div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -37,24 +37,6 @@
           <!--end::Container-->
         </div>
 
-<!-- 
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Project Detail</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Project Detail</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </section>
-
- -->
 
     <!-- Main content -->
     <section class="content">
@@ -62,62 +44,11 @@
       <!-- Default box -->
       <div class="card">
 
-<!-- 
-        <div class="card-header">
-          <h3 class="card-title">Projects Detail</h3>
-
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-
- -->
-
-
-
-
-
-
-
-
-
         <div class="card-body">
           <div class="row">
 
-
-
             <div class="col-12 col-md-12 col-lg-9 order-2 order-md-1">
-              <div class="row">
-                <div class="col-12 col-sm-4">
-                  <div class="info-box bg-light">
-                    <div class="info-box-content">
-                      <span class="info-box-text text-center text-muted">Number of Active Beneficiary</span>
-                      <span class="info-box-number text-center text-muted mb-0">2300</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-4">
-                  <div class="info-box bg-light">
-                    <div class="info-box-content">
-                      <span class="info-box-text text-center text-muted">Total Number of Waitlisted</span>
-                      <span class="info-box-number text-center text-muted mb-0">2000</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-4">
-                  <div class="info-box bg-light">
-                    <div class="info-box-content">
-                      <span class="info-box-text text-center text-muted">Total Number of Delisted</span>
-                      <span class="info-box-number text-center text-muted mb-0">20</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
               <div class="row">
                 <div class="col-12">
                     <!-- Search Box Section -->
@@ -185,14 +116,12 @@
 
                     <!-- DataTable Section -->
                     <div class="card card-primary card-outline ">
-                        
                         <div class="card-header">
                             <h3 class="card-title">Senior Citizens List</h3>
-                                <button type="button" class="btn btn-primary btn-sm float-end entry-refresh">
-                                    <i class="bi bi-arrow-clockwise"></i> Refresh
-                                </button>                  
+                            <button type="button" class="btn btn-primary btn-sm float-end add-entry">
+                                <i class="bi bi-plus-lg"></i> New Entry
+                            </button>                  
                         </div>
-
                         <div class="card-body">
 
 
@@ -223,10 +152,10 @@
                                               <button class="btn btn-danger btn-sm delete-entry" title="Delete">
                                                   <i class="bi bi-trash"></i>
                                               </button>
-                                              <button class="btn btn-info btn-sm bene-history" title="Update History">
+<!--                                               <button class="btn btn-info btn-sm bene-history" title="Update History">
                                                   <i class="bi bi-arrow-repeat"></i>
                                               </button>
-
+ -->
                                           </td>
                                     </tr>
                                     <!-- More rows will be added dynamically -->
@@ -246,7 +175,7 @@
 
             <div class="col-12 col-md-12 col-lg-3 order-1 order-md-2">
               <h3 class="text-primary"><i class="fas fa-paint-brush"></i> Info!</h3>
-              <p class="text-muted">This page allows you to efficiently search for and manage beneficiary information. You can perform an advanced search by selecting criteria such as province, municipality, and barangay, or by entering specific details like PhilSys ID or beneficiary name. Additionally, you can view a list of senior citizens, including their ID, full name, age, sex, and current status (e.g., active), making it easier to track and manage beneficiaries. Use the available search fields and filters to refine your results and access the information you need quickly.</p>
+              <p class="text-muted">This page displays a list of waitlisted senior citizens who are potential beneficiaries for validation and recommendation. You can efficiently search and manage beneficiary information using advanced search criteria such as province, municipality, and barangay, or by entering specific details like PhilSys ID or beneficiary name. The list includes essential details such as ID, full name, age, sex, and current status, allowing for easy tracking and management. Utilize the available search fields and filters to refine your results and access relevant information quickly.</p>
               <br>
 <!-- 
               <div class="text-muted">
@@ -319,9 +248,9 @@
         });
 
         // history modal ------------------------------------------------------
-        $(document).on("click", ".bene-history", function() {
-            $("#historyModal").modal("show");
-        });
+        // $(document).on("click", ".bene-history", function() {
+        //     $("#historyModal").modal("show");
+        // });
 
         // Initialize DataTables
         // $('#basicTable, #statusTable, #addressTable').DataTable({
@@ -391,14 +320,12 @@
             $('.editable-form-control').prop("disabled", true);
         })
 
-
-        // $(document).on('click','.add-entry',function(e) {
-        //     e.preventDefault();
-        //     $("#beneficiaryModal").modal("show"); // Open the modal
-        //     $("#beneficiaryEditorForm")[0].reset();
-        //     // $(".editable-form-control:first").focus(); 
-        // })
-
+        $(document).on('click','.add-entry',function(e) {
+            e.preventDefault();
+            $("#beneficiaryModal").modal("show"); // Open the modal
+            $("#beneficiaryEditorForm")[0].reset();
+            // $(".editable-form-control:first").focus(); 
+        })
         $(".delete-entry").click(function (e) {
             e.preventDefault(); // Prevent default action
 
@@ -449,6 +376,7 @@
 {% block models %}
   
 <!-- Bene History Modal -->
+<!-- 
 <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -528,10 +456,9 @@
         </div>
     </div>
 </div>
-
+ -->
 
   <!-- Beneficiary Editor Modal -->
-  
   <div class="modal fade" id="beneficiaryModal" style="background: rgba(0, 0, 0, 0.8);" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="beneficiaryModalLabel"  aria-hidden="true">
       <div class="modal-dialog modal-lg" >
           <div class="modal-content" style="background: rgba(0, 0, 0, 0.0);">

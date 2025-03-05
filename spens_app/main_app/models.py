@@ -113,10 +113,25 @@ class Beneficiary(models.Model):
     contact_number = models.CharField(max_length=15, blank=True, null=True)
     email = models.CharField(max_length=15, blank=True, null=True)
     status = models.IntegerField(choices=[(2, '2 - Active'), (1, '1 - Waitlisted'), (3, '3 - Deceased'),(4, '4 - Inactive'),(5, '5 - Waived'),(6, '6 - Moved-out without notice'), (7, '7 - Ineligible')], default=1)
-    date_registered = models.DateTimeField()
+
+    #waitlisted encoding (encoders)
     date_encoded = models.DateTimeField(default=timezone.now)
+    encoded_by  = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_encoding') 
+
+    #validation (project development officer)
+    date_validated = models.DateTimeField(null=True)
+    validated_by  = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_validation') 
+
+    #recommedation (regional program coordinator)
+    date_recommended = models.DateTimeField(null=True)
+    recommended_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_recomm') 
+
+    #approval (regional director)
+    date_approved = models.DateTimeField(null=True)
+    approved_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_approval') 
+
     last_updated = models.DateTimeField(auto_now=True)
-    last_updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)  # Track last user who updated
+    last_updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_user_beneficiary')  # Track last user who updated
 
     #for pantawid beneficiary only ----------------------------
     is_pantawid = models.BooleanField(default=False)  # Boolean: True or False
