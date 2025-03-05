@@ -73,7 +73,7 @@ CREATE TABLE `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `auth_permission` */
 
@@ -157,6 +157,10 @@ insert  into `auth_permission`(`id`,`name`,`content_type_id`,`codename`) values 
 insert  into `auth_permission`(`id`,`name`,`content_type_id`,`codename`) values (78,'Can change audit trail',20,'change_audittrail');
 insert  into `auth_permission`(`id`,`name`,`content_type_id`,`codename`) values (79,'Can delete audit trail',20,'delete_audittrail');
 insert  into `auth_permission`(`id`,`name`,`content_type_id`,`codename`) values (80,'Can view audit trail',20,'view_audittrail');
+insert  into `auth_permission`(`id`,`name`,`content_type_id`,`codename`) values (81,'Can add bene transaction',21,'add_benetransaction');
+insert  into `auth_permission`(`id`,`name`,`content_type_id`,`codename`) values (82,'Can change bene transaction',21,'change_benetransaction');
+insert  into `auth_permission`(`id`,`name`,`content_type_id`,`codename`) values (83,'Can delete bene transaction',21,'delete_benetransaction');
+insert  into `auth_permission`(`id`,`name`,`content_type_id`,`codename`) values (84,'Can view bene transaction',21,'view_benetransaction');
 
 /*Table structure for table `auth_user` */
 
@@ -179,7 +183,7 @@ CREATE TABLE `auth_user` (
 /*Data for the table `auth_user` */
 
 insert  into `auth_user`(`id`,`password`,`last_login`,`is_superuser`,`username`,`first_name`,`last_name`,`email`,`is_staff`,`is_active`,`date_joined`) values (1,'pbkdf2_sha256$720000$VGQtht2Slv3cXCYfbhkuzv$ivVdeb7YCKH5SbBrOO5f0EmnSgvgPt8M1/tMLlBP/cw=','2025-03-05 04:14:53.669952',1,'admin','','','alden.roxy@gmail.com',1,1,'2025-03-02 06:06:33.040007');
-insert  into `auth_user`(`id`,`password`,`last_login`,`is_superuser`,`username`,`first_name`,`last_name`,`email`,`is_staff`,`is_active`,`date_joined`) values (4,'pbkdf2_sha256$720000$vNDl5BpUDeeUhXPKOTOEVw$YZs3xBNn80I1i+hLaHzJ6UbLi/58LuYoyUsg8bHZk6w=','2025-03-05 05:22:29.122202',0,'user01','Alden','Quinones','user01@gmail.com',0,1,'2025-03-02 07:09:29.309544');
+insert  into `auth_user`(`id`,`password`,`last_login`,`is_superuser`,`username`,`first_name`,`last_name`,`email`,`is_staff`,`is_active`,`date_joined`) values (4,'pbkdf2_sha256$720000$vNDl5BpUDeeUhXPKOTOEVw$YZs3xBNn80I1i+hLaHzJ6UbLi/58LuYoyUsg8bHZk6w=','2025-03-05 06:40:59.712515',0,'user01','Alden','Quinones','user01@gmail.com',0,1,'2025-03-02 07:09:29.309544');
 insert  into `auth_user`(`id`,`password`,`last_login`,`is_superuser`,`username`,`first_name`,`last_name`,`email`,`is_staff`,`is_active`,`date_joined`) values (7,'pbkdf2_sha256$600000$fF3LMk1n42Jrfg5kde3ida$AXq1mMw5LRtBUETWmTopgDn61ysnJroERe8rI/DrNgE=',NULL,0,'user02','','','user02@gmail.com',0,0,'2025-03-02 07:33:47.037666');
 
 /*Table structure for table `auth_user_groups` */
@@ -245,7 +249,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `django_content_type` */
 
@@ -258,6 +262,7 @@ insert  into `django_content_type`(`id`,`app_label`,`model`) values (20,'main_ap
 insert  into `django_content_type`(`id`,`app_label`,`model`) values (10,'main_app','barangay');
 insert  into `django_content_type`(`id`,`app_label`,`model`) values (13,'main_app','beneficiary');
 insert  into `django_content_type`(`id`,`app_label`,`model`) values (19,'main_app','beneficiarychangelog');
+insert  into `django_content_type`(`id`,`app_label`,`model`) values (21,'main_app','benetransaction');
 insert  into `django_content_type`(`id`,`app_label`,`model`) values (7,'main_app','employeeprofile');
 insert  into `django_content_type`(`id`,`app_label`,`model`) values (16,'main_app','fundsource');
 insert  into `django_content_type`(`id`,`app_label`,`model`) values (17,'main_app','liquidation');
@@ -278,7 +283,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `django_migrations` */
 
@@ -319,6 +324,19 @@ insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (34,'main_a
 insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (35,'main_app','0017_beneficiary_last_updated_by_beneficiarychangelog','2025-03-05 02:29:41.064871');
 insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (36,'main_app','0018_audittrail_delete_beneficiarychangelog','2025-03-05 02:34:34.756029');
 insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (37,'main_app','0019_alter_audittrail_options_and_more','2025-03-05 03:09:52.441142');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (38,'main_app','0020_remove_beneficiary_date_registered','2025-03-05 07:09:23.740551');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (39,'main_app','0021_beneficiary_date_registered','2025-03-05 07:09:23.750553');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (40,'main_app','0022_beneficiary_encoded_by_and_more','2025-03-05 07:16:13.870622');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (41,'main_app','0023_rename_date_registered_beneficiary_date_recommended_and_more','2025-03-05 07:19:47.275049');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (42,'main_app','0024_beneficiary_approved_by_beneficiary_date_approved_and_more','2025-03-05 07:22:38.424176');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (43,'main_app','0025_beneficiary_certified_correct_by_and_more','2025-03-05 07:34:44.978798');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (44,'main_app','0026_rename_date_encoded_beneficiary_encoded_dt_and_more','2025-03-05 07:35:31.603583');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (45,'main_app','0027_rename_date_recommended_beneficiary_recommended_dt','2025-03-05 07:36:37.412430');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (46,'main_app','0028_rename_date_approved_beneficiary_approved_dt','2025-03-05 07:37:01.021505');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (47,'main_app','0029_rename_last_updated_beneficiary_last_updated_dt','2025-03-05 07:40:13.184255');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (48,'main_app','0030_remove_beneficiary_encoded_by_and_more','2025-03-05 08:44:27.746430');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (49,'main_app','0031_remove_beneficiary_validated_by_and_more','2025-03-05 08:45:16.679973');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (50,'main_app','0032_remove_beneficiary_approved_by_and_more','2025-03-05 08:47:17.986093');
 
 /*Table structure for table `django_session` */
 
@@ -338,12 +356,14 @@ insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values
 insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('b4nriamfydd36oyxgye7rhguustch4vm','.eJxVjEEOwiAQRe_C2hBgpkBduvcMZIBBqoYmpV0Z765NutDtf-_9lwi0rTVsnZcwZXEWKE6_W6T04LaDfKd2m2Wa27pMUe6KPGiX1znz83K4fweVev3WNOBgHERjLaaMbjSFGJXSXJT26AyPniECaW8joHKkMgBaDbZQKiDeH79-NwM:1tpJAG:KH8cOtdAU5Wd3k5X-ErumxExC9O0XNgJGy1XfpyOAqk','2025-03-04 04:11:52.865076');
 insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('c44o7fg9jdjqmyty3p2zurjsgv916bo8','.eJxVjMEOwiAQBf-FsyFQWASP3v0GsrAgVQNJaU_Gf5cmPej1zcx7M4_bWvzW0-JnYhcm2el3Cxifqe6AHljvjcdW12UOfFf4QTu_NUqv6-H-HRTsZdQmTjkDSBJyRA6NyNpomyhLykZpUkgEMLmI1sE5KYlhyEAyKeEssc8X-z44Ww:1tpg9l:oFk6GnYmxHehlffMGAtdqM0Vuicpchp-BaicHBN-ZNI','2025-03-05 04:44:53.675990');
 insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('d838vf0filv806gss8e56u83t1xhhehn','.eJxVjEEOwiAQRe_C2hBgpkBduvcMZIBBqoYmpV0Z765NutDtf-_9lwi0rTVsnZcwZXEWKE6_W6T04LaDfKd2m2Wa27pMUe6KPGiX1znz83K4fweVev3WNOBgHERjLaaMbjSFGJXSXJT26AyPniECaW8joHKkMgBaDbZQKiDeH79-NwM:1tpLNV:g_JWQGXskfQmq0ErZYJcztuMQEv9-HiTA1yyGZ_BsOY','2025-03-04 06:33:41.360153');
+insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('dvhlxfz5mh5eyesctbos68s6wne4k1nw','.eJxVjEEOwiAQRe_C2hBgpkBduvcMZIBBqoYmpV0Z765NutDtf-_9lwi0rTVsnZcwZXEWKE6_W6T04LaDfKd2m2Wa27pMUe6KPGiX1znz83K4fweVev3WNOBgHERjLaaMbjSFGJXSXJT26AyPniECaW8joHKkMgBaDbZQKiDeH79-NwM:1tphhg:8RKL-yXye0BCwZl1gj2EXMr6Xc9z0rdqfiuad7QhEWk','2025-03-05 06:24:00.920629');
 insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('gnpaj16ijlpj1uesjzzhbq7em5zjrd2o','.eJxVjEEOwiAQRe_C2hBgpkBduvcMZIBBqoYmpV0Z765NutDtf-_9lwi0rTVsnZcwZXEWKE6_W6T04LaDfKd2m2Wa27pMUe6KPGiX1znz83K4fweVev3WNOBgHERjLaaMbjSFGJXSXJT26AyPniECaW8joHKkMgBaDbZQKiDeH79-NwM:1toyLB:xrfGa7yIfu4Efx_jwrQwAMx4y1ZhpR7cYwPJVHx60mg','2025-03-03 05:57:45.631810');
 insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('hfrj42cskwx4qfspvf9uw1koiv5mczmn','.eJxVjEEOwiAQRe_C2hBgpkBduvcMZIBBqoYmpV0Z765NutDtf-_9lwi0rTVsnZcwZXEWKE6_W6T04LaDfKd2m2Wa27pMUe6KPGiX1znz83K4fweVev3WNOBgHERjLaaMbjSFGJXSXJT26AyPniECaW8joHKkMgBaDbZQKiDeH79-NwM:1tpGOG:VA5tYojesj9Ky5uXcw8NfpohpBNZhuhxqn3BbHcD9Hc','2025-03-04 01:14:08.785477');
 insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('ifh6jdqw1bpigzw0igo5dbs770640f43','.eJxVjEEOwiAQRe_C2hBgpkBduvcMZIBBqoYmpV0Z765NutDtf-_9lwi0rTVsnZcwZXEWKE6_W6T04LaDfKd2m2Wa27pMUe6KPGiX1znz83K4fweVev3WNOBgHERjLaaMbjSFGJXSXJT26AyPniECaW8joHKkMgBaDbZQKiDeH79-NwM:1tp0Xw:9dyN2McKswS-jhOd86QT-tqtL9xKwyaK0Zm0aAHjmkI','2025-03-03 08:19:04.332068');
 insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('lp98zj4ptbtp6na8tdh75ogvi21b2th7','.eJxVjEEOwiAQRe_C2hBgpkBduvcMZIBBqoYmpV0Z765NutDtf-_9lwi0rTVsnZcwZXEWKE6_W6T04LaDfKd2m2Wa27pMUe6KPGiX1znz83K4fweVev3WNOBgHERjLaaMbjSFGJXSXJT26AyPniECaW8joHKkMgBaDbZQKiDeH79-NwM:1tpgjb:6f6kGWqTwSOYcm3av3MVFGOfSSW9xVqlInzlowjVrv0','2025-03-05 05:21:55.213380');
 insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('n045hddxli0am5o24wsilmlgnp5n2kau','e30:1toch5:H_ppj6XRg0_EopeBQp4wGxYd3mh5DZypmd8LdlYe2GQ','2025-03-16 06:20:55.882064');
 insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('nt1rnx8ouzy0sgehr2qo7mz17u6btu8y','.eJxVjEEOwiAQRe_C2hBgpkBduvcMZIBBqoYmpV0Z765NutDtf-_9lwi0rTVsnZcwZXEWKE6_W6T04LaDfKd2m2Wa27pMUe6KPGiX1znz83K4fweVev3WNOBgHERjLaaMbjSFGJXSXJT26AyPniECaW8joHKkMgBaDbZQKiDeH79-NwM:1tphDB:vTfz5tYLKfbjs1V-BL51aR7VyeDSV6RNeS0kyN7tNv4','2025-03-05 05:52:29.124213');
+insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('pvxjlkz6cbzzv78gzbyoztvxi7v19nzz','.eJxVjEEOwiAQRe_C2hBgpkBduvcMZIBBqoYmpV0Z765NutDtf-_9lwi0rTVsnZcwZXEWKE6_W6T04LaDfKd2m2Wa27pMUe6KPGiX1znz83K4fweVev3WNOBgHERjLaaMbjSFGJXSXJT26AyPniECaW8joHKkMgBaDbZQKiDeH79-NwM:1tpiR9:zXqB-0fBLaLaRnIUnNF1S6p1E9G4h-cC5smG_Z9w1Ss','2025-03-06 06:40:59.712515');
 insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('riffp63hp10ilrllymrrv07eq9xuq1lu','e30:1todSR:C77rdbaZTEswSTqbscPS4SrPyObSxPaYm_pvVmAVKYM','2025-03-02 07:39:51.225051');
 insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('tl9n98ofpican2a442y3hk17mew4atd9','.eJxVjEEOwiAQRe_C2hBgpkBduvcMZIBBqoYmpV0Z765NutDtf-_9lwi0rTVsnZcwZXEWKE6_W6T04LaDfKd2m2Wa27pMUe6KPGiX1znz83K4fweVev3WNOBgHERjLaaMbjSFGJXSXJT26AyPniECaW8joHKkMgBaDbZQKiDeH79-NwM:1tpKuO:bXHIJW1wcHJdy8zhyqXPtqtRtOVbFvtqmXKr5idlW7k','2025-03-04 06:03:36.302540');
 insert  into `django_session`(`session_key`,`session_data`,`expire_date`) values ('tm2ab916lfdhohz1i8aess5fw2ego6nw','e30:1todJs:pGbnEINh-sQuWN7IVrBa6UDyKqqGzvhFevgeqxvyspg','2025-03-02 07:31:00.006507');
@@ -1670,29 +1690,56 @@ CREATE TABLE `tbl_beneficiaries` (
   `address` longtext NOT NULL,
   `contact_number` varchar(15) DEFAULT NULL,
   `status` int(11) NOT NULL,
-  `date_registered` datetime(6) NOT NULL,
-  `last_updated` datetime(6) NOT NULL,
+  `last_updated_dt` datetime(6) NOT NULL,
   `address_psgc_id` bigint(20) DEFAULT NULL,
   `biometric_fp` varchar(50) DEFAULT NULL,
-  `date_encoded` datetime(6) NOT NULL,
   `email` varchar(15) DEFAULT NULL,
   `is_pantawid` tinyint(1) NOT NULL,
   `pantawid_hhid` varchar(25) DEFAULT NULL,
   `pantawid_lowb` int(11) DEFAULT NULL,
   `last_updated_by_id` int(11) DEFAULT NULL,
+  `tras_encoding_id` varchar(50) DEFAULT NULL,
+  `tras_validation_id` varchar(50) DEFAULT NULL,
+  `tras_approval_id` varchar(50) DEFAULT NULL,
+  `tras_qa_id` varchar(50) DEFAULT NULL,
+  `tras_recommendation_id` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `beneficiary_id` (`beneficiary_id`),
   UNIQUE KEY `philsys_id` (`philsys_id`),
   UNIQUE KEY `senior_citizen_id` (`senior_citizen_id`),
   KEY `tbl_beneficiaries_address_psgc_id_ab7cf43a_fk_tbl_barangay_id` (`address_psgc_id`),
   KEY `tbl_beneficiaries_last_updated_by_id_2bd83104_fk_auth_user_id` (`last_updated_by_id`),
+  KEY `tbl_beneficiaries_tras_encoding_id_7d9a38f2_fk_tbl_btran` (`tras_encoding_id`),
+  KEY `tbl_beneficiaries_tras_validation_id_b3cc41d2_fk_tbl_btran` (`tras_validation_id`),
+  KEY `tbl_beneficiaries_tras_approval_id_cab55f8a_fk_tbl_btran` (`tras_approval_id`),
+  KEY `tbl_beneficiaries_tras_qa_id_244448d7_fk_tbl_btran` (`tras_qa_id`),
+  KEY `tbl_beneficiaries_tras_recommendation__5e7506bf_fk_tbl_btran` (`tras_recommendation_id`),
   CONSTRAINT `tbl_beneficiaries_address_psgc_id_ab7cf43a_fk_tbl_barangay_id` FOREIGN KEY (`address_psgc_id`) REFERENCES `tbl_barangay` (`id`),
-  CONSTRAINT `tbl_beneficiaries_last_updated_by_id_2bd83104_fk_auth_user_id` FOREIGN KEY (`last_updated_by_id`) REFERENCES `auth_user` (`id`)
+  CONSTRAINT `tbl_beneficiaries_last_updated_by_id_2bd83104_fk_auth_user_id` FOREIGN KEY (`last_updated_by_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `tbl_beneficiaries_tras_approval_id_cab55f8a_fk_tbl_btran` FOREIGN KEY (`tras_approval_id`) REFERENCES `tbl_btransactions` (`trans_id`),
+  CONSTRAINT `tbl_beneficiaries_tras_encoding_id_7d9a38f2_fk_tbl_btran` FOREIGN KEY (`tras_encoding_id`) REFERENCES `tbl_btransactions` (`trans_id`),
+  CONSTRAINT `tbl_beneficiaries_tras_qa_id_244448d7_fk_tbl_btran` FOREIGN KEY (`tras_qa_id`) REFERENCES `tbl_btransactions` (`trans_id`),
+  CONSTRAINT `tbl_beneficiaries_tras_recommendation__5e7506bf_fk_tbl_btran` FOREIGN KEY (`tras_recommendation_id`) REFERENCES `tbl_btransactions` (`trans_id`),
+  CONSTRAINT `tbl_beneficiaries_tras_validation_id_b3cc41d2_fk_tbl_btran` FOREIGN KEY (`tras_validation_id`) REFERENCES `tbl_btransactions` (`trans_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `tbl_beneficiaries` */
 
-insert  into `tbl_beneficiaries`(`id`,`beneficiary_id`,`philsys_id`,`senior_citizen_id`,`first_name`,`middle_name`,`last_name`,`birth_date`,`sex`,`address`,`contact_number`,`status`,`date_registered`,`last_updated`,`address_psgc_id`,`biometric_fp`,`date_encoded`,`email`,`is_pantawid`,`pantawid_hhid`,`pantawid_lowb`,`last_updated_by_id`) values (1,'BNF001','1234567890','SC12345','alden1213333','P.','Dela Cruz','1981-01-02','m','1234 Sample Street, Sample City','09123456789',2,'2025-03-05 02:58:33.523513','2025-03-05 03:57:52.428844',124701008,'fingerprint_data','2025-03-05 03:57:52.423826','dcruz@email.com',0,NULL,NULL,1);
+insert  into `tbl_beneficiaries`(`id`,`beneficiary_id`,`philsys_id`,`senior_citizen_id`,`first_name`,`middle_name`,`last_name`,`birth_date`,`sex`,`address`,`contact_number`,`status`,`last_updated_dt`,`address_psgc_id`,`biometric_fp`,`email`,`is_pantawid`,`pantawid_hhid`,`pantawid_lowb`,`last_updated_by_id`,`tras_encoding_id`,`tras_validation_id`,`tras_approval_id`,`tras_qa_id`,`tras_recommendation_id`) values (1,'BNF001','1234567890','SC12345','alden1213333','P.','Dela Cruz','1981-01-02','m','1234 Sample Street, Sample City','09123456789',2,'2025-03-05 03:57:52.428844',124701008,'fingerprint_data','dcruz@email.com',0,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL);
+
+/*Table structure for table `tbl_btransactions` */
+
+CREATE TABLE `tbl_btransactions` (
+  `trans_id` varchar(50) NOT NULL,
+  `action` int(11) NOT NULL,
+  `date_acted` datetime(6) NOT NULL,
+  `acted_by_id` int(11) NOT NULL,
+  PRIMARY KEY (`trans_id`),
+  KEY `tbl_btransactions_acted_by_id_86693b24_fk_auth_user_id` (`acted_by_id`),
+  CONSTRAINT `tbl_btransactions_acted_by_id_86693b24_fk_auth_user_id` FOREIGN KEY (`acted_by_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `tbl_btransactions` */
 
 /*Table structure for table `tbl_employee` */
 

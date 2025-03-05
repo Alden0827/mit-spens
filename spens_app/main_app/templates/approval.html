@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{app_program}} {{app_name}} | Beneficiary List
+{% endblock %}
+
+{% block content %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+   <!-- Content Header (Page header) -->
+    <!--begin::App Content Header-->
+    <div class="app-content-header">
+      <!--begin::Container-->
+      <div class="container-fluid">
+        <!--begin::Row-->
+        <div class="row">
+          <div class="col-sm-6"><h3 class="mb-0">Header</h3></div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-end">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+            </ol>
+          </div>
+        </div>
+        <!--end::Row-->
+      </div>
+      <!--end::Container-->
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-12 col-md-12 col-lg-9 order-2 order-md-1">
+
+              <div class="row">
+                <div class="col-12">
+
+                    <!-- DataTable Section -->
+                    <div class="card card-primary card-outline ">
+                        <div class="card-header">
+                            <h3 class="card-title">table title</h3>
+                            <button type="button" class="btn btn-primary btn-sm float-end add-entry">
+                                <i class="bi bi-plus-lg"></i> Button
+                            </button>                  
+                        </div>
+                        <div class="card-body">
+
+
+
+                            <table id="sample" class="table table-sm table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>col1</th>
+                                        <th>col2</th>
+                                        <th class="d-none d-md-table-cell">col3</th>
+                                        <th class="d-none d-md-table-cell">col4</th>
+                                        <th class="d-none d-md-table-cell">col5</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Example Row -->
+                                    <tr>
+                                        <td>SC12345</td>
+                                        <td>Juan Dela Cruz</td>
+                                          <td class="d-none d-md-table-cell">data1</td>
+                                          <td class="d-none d-md-table-cell">data2</td>
+                                          <td class="d-none d-md-table-cell">data3</td>
+                                          <td>
+                                              <button class="btn btn-warning btn-sm edit-entry" title="Edit">
+                                                  <i class="bi bi-pencil-square"></i>
+                                              </button>
+                                              <button class="btn btn-danger btn-sm delete-entry" title="Delete">
+                                                  <i class="bi bi-trash"></i>
+                                              </button>
+                                          </td>
+                                    </tr>
+                                    <!-- More rows will be added dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+              </div>
+            </div>
+
+
+            <div class="col-12 col-md-12 col-lg-3 order-1 order-md-2">
+              <h3 class="text-primary"><i class="fas fa-paint-brush"></i> Info!</h3>
+              <p class="text-muted">Ehem!, indi pag-ibutáng ang mga kamot sa ini nga pahina!  Ini nga pahina espesyal—isa ini ka blangko nga template para sa pagtukod sang website. Palihug, indi ini pag-usbóna direkta kay basi magtupa ang kabudlay sa imo!  Imbes, himua anay sang matin-ad nga kopya, kag didto ka na magpasilak sang imo kahibalo sa pagdesinyo. Suno sa function sang imo pahina, pwede mo na ini i-dekorasyonan kag himuon nga masterpiece!</p>
+              <br>
+
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+
+
+
+
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+{% endblock %}
+
+
+    
+{% block css_script %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+{% endblock %}
+
+
+{% block javascript %}
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+
+
+    $(document).ready(function() {
+        $('#sample').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "responsive": true,
+            "columnDefs": [
+                { "orderable": false, "targets": 5 } // Disable sorting for 'Options' column
+            ]
+        });
+    });
+</script>
+{% endblock %}
+
+
+{% block models %}
+
+{% endblock %}

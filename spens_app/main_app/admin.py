@@ -17,7 +17,7 @@ admin.site.register(AuditTrail)
 
 @admin.register(Beneficiary)
 class BeneficiaryAdmin(admin.ModelAdmin):
-    list_display = ('beneficiary_id', 'first_name', 'middle_name', 'last_name', 'birth_date', 'sex', 'status', 'last_updated')  # Corrected fields
+    list_display = ('beneficiary_id', 'first_name', 'middle_name', 'last_name', 'birth_date', 'sex', 'status', 'last_updated_dt')  # Corrected fields
     search_fields = ('first_name', 'last_name', 'beneficiary_id', 'contact_number')
 
     def age(self, obj):

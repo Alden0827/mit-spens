@@ -97,6 +97,44 @@ class EmployeeProfile(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.emp_id})"
 
+class BeneTransaction(models.Model):
+    ACTION_CHOICES = [
+        (1, 'Encoded'),
+        (2, 'Validated'),
+        (3, 'Certified Correct'),
+        (4, 'Recommended'),
+        (5, 'Approved'),
+    ]
+
+    trans_id = models.CharField(
+        max_length=50, 
+        primary_key=True, 
+        editable=False
+    )
+    action = models.IntegerField(choices=ACTION_CHOICES)
+    date_acted = models.DateTimeField(auto_now_add=True)
+    acted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'tbl_btransactions'
+
+    def generate_unique_number(self):
+        """ Generate a unique 6-digit number """
+        while True:
+            unique_number = random.randint(100000, 999999)
+            if not BeneTransaction.objects.filter(trans_id__endswith=f"_{unique_number}").exists():
+                return unique_number
+
+    def save(self, *args, **kwargs):
+        if not self.trans_id:
+            date_part = datetime.now().strftime('%Y%m%d')
+            unique_number = self.generate_unique_number()
+            self.trans_id = f"tnx_{date_part}_{unique_number}"
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.trans_id} - {self.get_action_display()}"
+
 
 class Beneficiary(models.Model):
     beneficiary_id = models.CharField(max_length=20, unique=True)  # Unique system-generated ID
@@ -115,22 +153,32 @@ class Beneficiary(models.Model):
     status = models.IntegerField(choices=[(2, '2 - Active'), (1, '1 - Waitlisted'), (3, '3 - Deceased'),(4, '4 - Inactive'),(5, '5 - Waived'),(6, '6 - Moved-out without notice'), (7, '7 - Ineligible')], default=1)
 
     #waitlisted encoding (encoders)
-    date_encoded = models.DateTimeField(default=timezone.now)
-    encoded_by  = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_encoding') 
+    # encoded_dt = models.DateTimeField(default=timezone.now)
+    # encoded_by  = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_encoding') 
+    tras_encoding  = models.ForeignKey(BeneTransaction, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_encoding') 
 
     #validation (project development officer)
-    date_validated = models.DateTimeField(null=True)
-    validated_by  = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_validation') 
+    # validated_dt = models.DateTimeField(null=True)
+    # validated_by  = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_validation') 
+    tras_validation  = models.ForeignKey(BeneTransaction, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_validation') 
+
+
+    #certified correct by (quality assuracne focal)
+    # certified_correct_dt  = models.DateTimeField(null=True)
+    # certified_correct_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_qa') 
+    tras_qa  = models.ForeignKey(BeneTransaction, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_qa') 
 
     #recommedation (regional program coordinator)
-    date_recommended = models.DateTimeField(null=True)
-    recommended_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_recomm') 
+    # recommended_dt = models.DateTimeField(null=True)
+    # recommended_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_recomm') 
+    tras_recommendation  = models.ForeignKey(BeneTransaction, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_recomm') 
 
     #approval (regional director)
-    date_approved = models.DateTimeField(null=True)
-    approved_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_approval') 
+    # approved_dt = models.DateTimeField(null=True)
+    # approved_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_approval') 
+    tras_approval  = models.ForeignKey(BeneTransaction, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_waitlisted_approval') 
 
-    last_updated = models.DateTimeField(auto_now=True)
+    last_updated_dt = models.DateTimeField(auto_now=True)
     last_updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='rel_user_beneficiary')  # Track last user who updated
 
     #for pantawid beneficiary only ----------------------------

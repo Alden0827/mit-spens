@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-  {{app_program}} {{app_name}} | Dashboard
+  {{app_program}} {{app_name}} | Beneficiary List
 {% endblock %}
 
 {% block content %}
@@ -11,12 +11,190 @@
 
 
 
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+   
+
+    <!-- Content Header (Page header) -->
+    
+
+        <!--begin::App Content Header-->
+        <div class="app-content-header">
+          <!--begin::Container-->
+          <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+              <div class="col-sm-6"><h3 class="mb-0">Header</h3></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                </ol>
+              </div>
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Container-->
+        </div>
+
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-12 col-md-12 col-lg-9 order-2 order-md-1">
+
+              <div class="row">
+                <div class="col-12">
+
+                    <!-- Search Box Section 
+                    <div class="card card-primary card-outline mb-4">
+                        <div class="card-header">
+                            <h3 class="card-title">Advance Search </h3>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                            <label for="province" class="form-label">Province</label>
+                                            <select class="form-select" id="province">
+                                                <option value="">Select Province</option>
+                                            </select>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                            <label for="municipality" class="form-label">Municipality</label>
+                                            <select class="form-select" id="municipality">
+                                                <option value="">Select Municipality</option>
+                                            </select>
+                                    </div>
+                                    
+                                    <div class="col-md-4">
+                                           <label for="barangay" class="form-label">Barangay</label>
+                                            <select class="form-select" id="barangay">
+                                                <option value="">Select Barangay</option>
+                                            </select>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                            <label for="philsys_id" class="form-label">PhilSys ID</label>
+                                            <input type="text" class="form-control" id="philsys_id" placeholder="Enter PhilSys ID">
+                                    </div>
+                                    
+                                    <div class="col-md-8">
+                                            <label for="beneficiary_name" class="form-label">Beneficiary Name</label>
+                                            <input type="text" class="form-control" id="beneficiary_name" placeholder="Enter Beneficiary Name">
+                                    </div>
+                                        
+
+
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                          <button class="btn btn-info pu" type="submit">
+                              <i class="bi bi-search"></i> Search
+                          </button>
+                        </div>
+
+
+                    </div>
+ -->
+                    <!-- DataTable Section -->
+                    <div class="card card-primary card-outline ">
+                        <div class="card-header">
+                            <h3 class="card-title">table title</h3>
+                            <button type="button" class="btn btn-primary btn-sm float-end add-entry">
+                                <i class="bi bi-plus-lg"></i> Button
+                            </button>                  
+                        </div>
+                        <div class="card-body">
+
+
+
+                            <table id="sample" class="table table-sm table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>col1</th>
+                                        <th>col2</th>
+                                        <th class="d-none d-md-table-cell">col3</th>
+                                        <th class="d-none d-md-table-cell">col4</th>
+                                        <th class="d-none d-md-table-cell">col5</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Example Row -->
+                                    <tr>
+                                        <td>SC12345</td>
+                                        <td>Juan Dela Cruz</td>
+                                          <td class="d-none d-md-table-cell">data1</td>
+                                          <td class="d-none d-md-table-cell">data2</td>
+                                          <td class="d-none d-md-table-cell">data3</td>
+                                          <td>
+                                              <button class="btn btn-warning btn-sm edit-entry" title="Edit">
+                                                  <i class="bi bi-pencil-square"></i>
+                                              </button>
+                                              <button class="btn btn-danger btn-sm delete-entry" title="Delete">
+                                                  <i class="bi bi-trash"></i>
+                                              </button>
+<!--                                               <button class="btn btn-info btn-sm bene-history" title="Update History">
+                                                  <i class="bi bi-arrow-repeat"></i>
+                                              </button>
+ -->
+                                          </td>
+                                    </tr>
+                                    <!-- More rows will be added dynamically -->
+                                </tbody>
+                            </table>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+              </div>
+            </div>
+
+
+            <div class="col-12 col-md-12 col-lg-3 order-1 order-md-2">
+              <h3 class="text-primary"><i class="fas fa-paint-brush"></i> Info!</h3>
+              <p class="text-muted">Ehem!, indi pag-ibutáng ang mga kamot sa ini nga pahina!  Ini nga pahina espesyal—isa ini ka blangko nga template para sa pagtukod sang website. Palihug, indi ini pag-usbóna direkta kay basi magtupa ang kabudlay sa imo!  Imbes, himua anay sang matin-ad nga kopya, kag didto ka na magpasilak sang imo kahibalo sa pagdesinyo. Suno sa function sang imo pahina, pwede mo na ini i-dekorasyonan kag himuon nga masterpiece!</p>
+              <br>
+
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+
+
+
+
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
 {% endblock %}
 
 
     
 {% block css_script %}
 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
 {% endblock %}
 
@@ -24,6 +202,298 @@
 {% block javascript %}
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+
+
+    $(document).ready(function() {
+        $('#sample').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "responsive": true,
+            "columnDefs": [
+                { "orderable": false, "targets": 5 } // Disable sorting for 'Options' column
+            ]
+        });
+    });
+</script>
+
 {% endblock %}
 
 
+{% block models %}
+  
+<!-- Bene History Modal -->
+<!-- 
+<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="historyModalLabel">Beneficiary Update History</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+
+                <div class="card card-primary card-outline card-tabs">
+                    <div class="card-header p-0 pt-1 border-bottom-0">
+                        <ul class="nav nav-tabs" id="historyTabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="basic-tab" data-bs-toggle="tab" href="#basic-info" role="tab" aria-controls="basic-info" aria-selected="true">Basic Information</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="status-tab" data-bs-toggle="tab" href="#status-info" role="tab" aria-controls="status-info" aria-selected="false">Status</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address-info" role="tab" aria-controls="address-info" aria-selected="false">Address</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="historyTabsContent">
+                            <div class="tab-pane fade active show" id="basic-info" role="tabpanel" aria-labelledby="basic-tab">
+                                <table id="basicTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Field Updated</th>
+                                            <th>Old Value</th>
+                                            <th>New Value</th>
+                                            <th>Date Updated</th>
+                                            <th>Updated By</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="status-info" role="tabpanel" aria-labelledby="status-tab">
+                                <table id="statusTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Field Updated</th>
+                                            <th>Old Value</th>
+                                            <th>New Value</th>
+                                            <th>Date Updated</th>
+                                            <th>Updated By</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="address-info" role="tabpanel" aria-labelledby="address-tab">
+                                <table id="addressTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Field Updated</th>
+                                            <th>Old Value</th>
+                                            <th>New Value</th>
+                                            <th>Date Updated</th>
+                                            <th>Updated By</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+ -->
+
+  <!-- Beneficiary Editor Modal -->
+  <div class="modal fade" id="beneficiaryModal" style="background: rgba(0, 0, 0, 0.8);" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="beneficiaryModalLabel"  aria-hidden="true">
+      <div class="modal-dialog modal-lg" >
+          <div class="modal-content" style="background: rgba(0, 0, 0, 0.0);">
+              <div class="modal-body">
+
+                <div class="card card-outline card-danger">
+                  <div class="card-header">
+                    <h3 class="card-title">Beneficiary Information</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" id="btnBeneEditorFormEdit">
+                          <i class="bi bi-pencil-square"></i> <!-- Bootstrap pencil icon for edit -->
+                      </button>
+                      <button type="button" class="btn btn-tool" data-lte-toggle="card-maximize">
+                        <i data-lte-icon="maximize" class="bi bi-fullscreen"></i>
+                        <i data-lte-icon="minimize" class="bi bi-fullscreen-exit"></i>
+                      </button>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- /.card-tools -->
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    
+                  <form id="beneficiaryEditorForm" method="POST" disabled>
+                      {% csrf_token %}
+                      
+                      <div class="row">
+                          <input type="hidden" class="form-control" id="beneficiary_id" name="beneficiary_id" required>
+                          
+                          <div class="col-md-4">
+                              <label for="philsys_id" class="form-label">PhilSys ID</label>
+                              <input type="text" class="form-control editable-form-control" id="philsys_id" name="philsys_id" >
+                          </div>
+                          <div class="col-md-4">
+                              <label for="senior_citizen_id" class="form-label">Senior Citizen ID</label>
+                              <input type="text" class="form-control editable-form-control" id="senior_citizen_id" name="senior_citizen_id" >
+                          </div>
+                          <div class="col-md-4">
+                              <label for="biometric_fp disabled" class="form-label">Biometric Data(fp)</label>
+                              <input type="text" class="form-control" id="biometric_fp" name="biometric_fp" disabled>
+                          </div>
+                      </div>
+
+
+                      <div class="row mt-2">
+                          <div class="col-md-4">
+                              <label for="first_name" class="form-label">First Name</label>
+                              <input type="text" class="form-control editable-form-control" id="first_name" name="first_name" required>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="middle_name" class="form-label">Middle Name</label>
+                              <input type="text" class="form-control editable-form-control" id="middle_name" name="middle_name">
+                          </div>
+                          <div class="col-md-4">
+                              <label for="last_name" class="form-label">Last Name</label>
+                              <input type="text" class="form-control editable-form-control" id="last_name" name="last_name" required>
+                          </div>
+                      </div>
+
+                      <div class="row mt-2">
+                          <div class="col-md-6">
+                              <label for="birth_date" class="form-label">Birth Date</label>
+                              <input type="date" class="form-control editable-form-control" id="birth_date" name="birth_date" required>
+                          </div>
+                          <div class="col-md-3">
+                              <label for="birth_age" class="form-label">Age</label>
+                              <input type="number" min="60" max="140" value="60" class="form-control " id="birth_age" name="birth_age" required disabled>
+                          </div>
+                          <div class="col-md-3">
+                              <label for="sex" class="form-label">Sex</label>
+                              <select class="form-select editable-form-control" id="sex" name="sex" required>
+                                  <option value="Male">Male</option>
+                                  <option value="Female">Female</option>
+                              </select>
+                          </div>
+                      </div>
+
+                      <div class="row mt-2">
+                          <div class="col-md-4">
+                              <label for="address_psgc" class="form-label">Province</label>
+                              <select class="form-select editable-form-control" id="address_psgc" name="address_psgc">
+                                  <option value="">Select Province</option>
+                                  {% for province in provinces %}
+                                      <option value="{{ province.id }}">{{ province.name }}</option>
+                                  {% endfor %}
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="address_psgc" class="form-label">Municipality/City</label>
+                              <select class="form-select editable-form-control" id="address_psgc" name="address_psgc">
+                                  <option value="">Please select</option>
+                                  {% for municipality in municipalities %}
+                                      <option value="{{ municipality.id }}">{{ municipality.name }}</option>
+                                  {% endfor %}
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label for="address_psgc" class="form-label">Barangay</label>
+                              <select class="form-select editable-form-control" id="address_psgc" name="address_psgc">
+                                  <option value="">Select Barangay</option>
+                                  {% for barangay in barangays %}
+                                      <option value="{{ barangay.id }}">{{ barangay.name }}</option>
+                                  {% endfor %}
+                              </select>
+                          </div>
+
+                      </div>
+                      <div class="row mt-2">
+                          <div class="col-md-12">
+                              <label for="address" class="form-label">Block/Lot/Street/Purok/etc</label>
+                              <textarea class="form-control editable-form-control" id="address" name="address" required></textarea>
+                          </div>
+                      </div>
+
+                      <div class="row mt-2">
+                          <div class="col-md-6">
+                              <label for="contact_number" class="form-label">Contact Number</label>
+                              <input type="text" class="form-control editable-form-control" id="contact_number" name="contact_number">
+                          </div>
+                          <div class="col-md-6">
+                              <label for="email" class="form-label">Email</label>
+                              <input type="email" class="form-control editable-form-control" id="email" name="email">
+                          </div>
+                      </div>
+
+                      <div class="row mt-2">
+                          <div class="col-md-6">
+                              <label for="status" class="form-label">Status</label>
+                              <select class="form-select editable-form-control" id="status" name="status" required>
+                                  <option value="Active">Active</option>
+                                  <option value="Inactive">Inactive</option>
+                              </select>
+                          </div>
+                          <div class="col-md-6">
+                              <label for="date_registered" class="form-label">Date Registered</label>
+                              <input type="date" class="form-control editable-form-control" id="date_registered" name="date_registered">
+                          </div>
+                      </div>
+
+                      <hr class="mt-4">
+                      <h5>Pantawid Beneficiary</h5>
+
+                      <div class="row mt-2">
+                          <div class="col-md-3">
+                              <label for="is_pantawid" class="form-label">Is Pantawid Beneficiary?</label>
+                              <select class="form-select editable-form-control" id="is_pantawid" name="is_pantawid">
+                                  <option value="False">No</option>
+                                  <option value="True">Yes</option>
+                              </select>
+                          </div>
+                          <div class="col-md-6">
+                              <label for="pantawid_hhid" class="form-label">Pantawid HHID</label>
+                              <input type="text" class="form-control editable-form-control" id="pantawid_hhid" name="pantawid_hhid">
+                          </div>
+                          <div class="col-md-3">
+                              <label for="pantawid_lowb" class="form-label">Level of Well-Being</label>
+                              <select class="form-select editable-form-control" id="pantawid_lowb" name="pantawid_lowb">
+                                  <option value="">Select Level</option>
+                                  <option value="1">Survival</option>
+                                  <option value="2">Subsistence</option>
+                                  <option value="3">Self-Sufficient</option>
+                              </select>
+                          </div>
+                      </div>
+
+                      <div class="modal-footer mt-4">
+                          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                          <button type="submit" class="btn btn-primary editable-form-control">Save</button>
+                      </div>
+                  </form>
+
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+{% endblock %}
