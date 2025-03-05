@@ -221,9 +221,10 @@
                                               <button class="btn btn-danger btn-sm delete-entry" title="Delete">
                                                   <i class="bi bi-trash"></i>
                                               </button>
-                                              <button class="btn btn-info btn-sm " title="Update History">
+                                              <button class="btn btn-info btn-sm bene-history" title="Update History">
                                                   <i class="bi bi-arrow-repeat"></i>
                                               </button>
+
                                           </td>
                                     </tr>
                                     <!-- More rows will be added dynamically -->
@@ -243,7 +244,7 @@
 
             <div class="col-12 col-md-12 col-lg-3 order-1 order-md-2">
               <h3 class="text-primary"><i class="fas fa-paint-brush"></i> Info!</h3>
-              <p class="text-muted">This page provides an overview of the beneficiary profiling system. Users can perform an advanced search by selecting criteria like province, municipality, and barangay, or by entering specific details such as PhilSys ID or beneficiary name. The page also features a list of senior citizens, showing details like their ID, full name, age, sex, and current status (e.g., active). This helps in efficiently managing and tracking beneficiary information.</p>
+              <p class="text-muted">This page allows you to efficiently search for and manage beneficiary information. You can perform an advanced search by selecting criteria such as province, municipality, and barangay, or by entering specific details like PhilSys ID or beneficiary name. Additionally, you can view a list of senior citizens, including their ID, full name, age, sex, and current status (e.g., active), making it easier to track and manage beneficiaries. Use the available search fields and filters to refine your results and access the information you need quickly.</p>
               <br>
 <!-- 
               <div class="text-muted">
@@ -298,7 +299,11 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 <script>
+
+
     $(document).ready(function() {
         $('#seniorTable').DataTable({
             "paging": true,
@@ -310,6 +315,66 @@
                 { "orderable": false, "targets": 5 } // Disable sorting for 'Options' column
             ]
         });
+
+        // history modal ------------------------------------------------------
+        $(document).on("click", ".bene-history", function() {
+            $("#historyModal").modal("show");
+        });
+
+        // Initialize DataTables
+        // $('#basicTable, #statusTable, #addressTable').DataTable({
+        //     "processing": true,
+        //     "serverSide": false,
+        //     "ajax": "fetch_history.php", // Update with your data source
+        //     "columns": [
+        //         { "data": "field_updated" },
+        //         { "data": "old_value" },
+        //         { "data": "new_value" },
+        //         { "data": "date_updated" },
+        //         { "data": "updated_by" }
+        //     ]
+        // });
+
+        $('#historyModal').on('show.bs.modal', function () {
+            // Sample data arrays
+            let sampleData = [
+                { field: "First Name", oldVal: "Jon", newVal: "Jonathan", date: "2025-02-01", updatedBy: "Admin" },
+                { field: "Last Name", oldVal: "mith", newVal: "Smith", date: "2025-01-15", updatedBy: "User1" }
+            ];
+
+            let statusData = [
+                { field: "Marital Status", oldVal: "Waitlisted", newVal: "Active", date: "2025-01-10", updatedBy: "Admin" }
+            ];
+
+            let addressData = [
+                { field: "City", oldVal: "Koronadal City", newVal: "General Santos City", date: "2024-03-02", updatedBy: "User2" }
+            ];
+
+            // Function to populate tables
+            function populateTable(tableId, data) {
+                let tbody = $(tableId).find("tbody");
+                tbody.empty(); // Clear old data
+                data.forEach(row => {
+                    let tr = `<tr>
+                        <td>${row.field}</td>
+                        <td>${row.oldVal}</td>
+                        <td>${row.newVal}</td>
+                        <td>${row.date}</td>
+                        <td>${row.updatedBy}</td>
+                    </tr>`;
+                    tbody.append(tr);
+                });
+            }
+
+            // Populate each table
+            populateTable("#basicTable", sampleData);
+            populateTable("#statusTable", statusData);
+            populateTable("#addressTable", addressData);
+        });
+
+
+        // end-history modal ------------------------------------------------------
+
 
         $("#btnBeneEditorFormEdit").click(function () {
             $(".editable-form-control").prop("disabled", false); // Enable all fields
@@ -378,10 +443,90 @@
 
 
 {% block models %}
+  
+<!-- Bene History Modal -->
+<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="historyModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="historyModalLabel">Beneficiary Update History</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
 
 
 
-  <!-- Bootstrap Modal -->
+                <div class="card card-primary card-outline card-tabs">
+                    <div class="card-header p-0 pt-1 border-bottom-0">
+                        <ul class="nav nav-tabs" id="historyTabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="basic-tab" data-bs-toggle="tab" href="#basic-info" role="tab" aria-controls="basic-info" aria-selected="true">Basic Information</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="status-tab" data-bs-toggle="tab" href="#status-info" role="tab" aria-controls="status-info" aria-selected="false">Status</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address-info" role="tab" aria-controls="address-info" aria-selected="false">Address</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="historyTabsContent">
+                            <div class="tab-pane fade active show" id="basic-info" role="tabpanel" aria-labelledby="basic-tab">
+                                <table id="basicTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Field Updated</th>
+                                            <th>Old Value</th>
+                                            <th>New Value</th>
+                                            <th>Date Updated</th>
+                                            <th>Updated By</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="status-info" role="tabpanel" aria-labelledby="status-tab">
+                                <table id="statusTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Field Updated</th>
+                                            <th>Old Value</th>
+                                            <th>New Value</th>
+                                            <th>Date Updated</th>
+                                            <th>Updated By</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="address-info" role="tabpanel" aria-labelledby="address-tab">
+                                <table id="addressTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Field Updated</th>
+                                            <th>Old Value</th>
+                                            <th>New Value</th>
+                                            <th>Date Updated</th>
+                                            <th>Updated By</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  <!-- Beneficiary Editor Modal -->
   <div class="modal fade" id="beneficiaryModal" style="background: rgba(0, 0, 0, 0.8);" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="beneficiaryModalLabel"  aria-hidden="true">
       <div class="modal-dialog modal-lg" >
           <div class="modal-content" style="background: rgba(0, 0, 0, 0.0);">

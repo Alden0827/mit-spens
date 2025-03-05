@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+import datetime
 
 class Region(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -115,6 +116,7 @@ class Beneficiary(models.Model):
     date_registered = models.DateTimeField()
     date_encoded = models.DateTimeField(default=timezone.now)
     last_updated = models.DateTimeField(auto_now=True)
+    last_updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)  # Track last user who updated
 
     #for pantawid beneficiary only ----------------------------
     is_pantawid = models.BooleanField(default=False)  # Boolean: True or False
@@ -132,6 +134,68 @@ class Beneficiary(models.Model):
 
     def __str__(self):
         return f"{self.beneficiary_id} - {self.first_name} {self.last_name}"
+
+    def save(self, *args, **kwargs):
+        if self.pk:  # If updating an existing record
+            old_record = Beneficiary.objects.get(pk=self.pk)
+            changes = []
+
+            for field in self._meta.fields:
+                field_name = field.name
+                old_value = getattr(old_record, field_name)
+                new_value = getattr(self, field_name)
+
+                # Normalize DateField for comparison
+                if isinstance(field, models.DateField):
+                    if isinstance(old_value, datetime.date) and isinstance(new_value, datetime.date):
+                        if old_value.strftime("%Y-%m-%d") == new_value.strftime("%Y-%m-%d"):
+                            continue  # Skip logging if they are identical
+
+                # Normalize DateTimeField (especially for timezone differences)
+                if isinstance(field, models.DateTimeField):
+                    if old_value and new_value:
+                        if old_value.replace(microsecond=0) == new_value.replace(microsecond=0):
+                            continue  # Skip logging if only microseconds differ
+
+                if str(old_value) != str(new_value):  # If the field has changed
+                    print(f"AuditTrail: '{old_value}' to '{new_value}'")
+                    changes.append(AuditTrail(
+                        beneficiary=self,
+                        changed_field=field_name,
+                        old_value=old_value,
+                        new_value=new_value,
+                        changed_by=self.last_updated_by
+                    ))
+
+            if changes:
+                AuditTrail.objects.bulk_create(changes)  # Save all changes at once
+
+        super().save(*args, **kwargs)  # Proceed with saving the updated record
+
+    # def save(self, *args, **kwargs):
+    #     """ Custom save method to track changes in AuditTrail """
+    #     if self.pk:  # If the record already exists (update operation)
+    #         old_record = Beneficiary.objects.get(pk=self.pk)
+    #         changes = []
+
+    #         for field in self._meta.fields:
+    #             field_name = field.name
+    #             old_value = getattr(old_record, field_name)
+    #             new_value = getattr(self, field_name)
+
+    #             if old_value != new_value:  # If value has changed
+    #                 changes.append(AuditTrail(
+    #                     beneficiary=self,
+    #                     changed_field=field_name,
+    #                     old_value=old_value,
+    #                     new_value=new_value,
+    #                     changed_by=self.last_updated_by
+    #                 ))
+
+    #         if changes:
+    #             AuditTrail.objects.bulk_create(changes)  # Save all changes at once
+
+    #     super().save(*args, **kwargs)  # Proceed with saving the updated record
 
 
 # Fund Sources Table
@@ -210,3 +274,19 @@ class Liquidation(models.Model):
 
     def __str__(self):
         return f"Liquidation {self.liquidation_id} - {self.total_liquidated}"
+
+
+class AuditTrail(models.Model):
+    beneficiary = models.ForeignKey(Beneficiary, on_delete=models.CASCADE)
+    changed_field = models.CharField(max_length=255, null=True)  # Make sure this matches your field name
+    old_value = models.TextField(null=True, blank=True)
+    new_value = models.TextField(null=True, blank=True)
+    changed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    changed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'audit_trail'
+        ordering = ['-changed_at']
+
+    def __str__(self):
+        return f"Change in {self.changed_field} for {self.beneficiary.beneficiary_id} by {self.changed_by}"

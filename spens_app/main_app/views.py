@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+
+#for user management
 from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
-
+#for audit trails
+from django.db.models.signals import pre_save
+# from django.dispatch import receiver
 
 def user_login(request):
     if request.method == "POST":
@@ -102,3 +106,18 @@ def user_activation():
 def user_logout(request):
     logout(request)
     return redirect('user_login') 
+
+@login_required
+def update_beneficiary(request, beneficiary_id):
+    beneficiary = get_object_or_404(Beneficiary, pk=beneficiary_id)
+
+    if request.method == "POST":
+        beneficiary.name = request.POST["name"]
+        beneficiary.age = request.POST["age"]
+        beneficiary.address = request.POST["address"]
+        beneficiary.last_updated_by = request.user  # Track user who made the change
+        beneficiary.save()
+
+        return redirect("beneficiary_list")  # Redirect to the list view
+
+    return render(request, "update_beneficiary.html", {"beneficiary": beneficiary})
