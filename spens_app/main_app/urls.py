@@ -11,8 +11,10 @@ urlpatterns = [
     path("", views.main_page, name="main_page"),
     path("profiling/", views.bdm_page, name="bdm_page"),
     path("waitlist/", views.waitlist_page, name="waitlist_page"),
+    path("analysis/", views.empty_page, name="pgwalker_page"),
     path("test/", views.empty_page, name="empty_page"),
     path('logout/', views.user_logout, name='logout'),
+    path('visualization/', views.data_visualization, name='data_visualization'),
 
 
 

@@ -131,7 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # user login settinga ---------------------------------
 
 # Set the session timeout period in seconds (for example, 30 minutes)
-SESSION_COOKIE_AGE = 1800  # 30 minutes
+SESSION_COOKIE_AGE = 3600*24  # 24 hour
 
 # Set the redirect URL for unauthenticated users
 LOGIN_URL = '/login/'  # Redirect to the login page

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{app_program}} {{app_name}} | Dashboard
+{% endblock %}
+
+{% block content %}
+  
+  {% autoescape off %}
+    <!-- {{ profile_html | safe  }} -->
+    {{ profile_html }}
+  {% endautoescape %}
+
+{% endblock %}
+    
+{% block css_script %}
+
+
+{% endblock %}
+
+
+{% block javascript %}
+
+
+{% endblock %}
+
+

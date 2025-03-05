@@ -11,6 +11,11 @@ from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
 # from django.dispatch import receiver
 
+#data analysis
+
+from datetime import datetime
+import pandas as pd
+
 def user_login(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -107,6 +112,8 @@ def user_logout(request):
     logout(request)
     return redirect('user_login') 
 
+
+
 @login_required
 def update_beneficiary(request, beneficiary_id):
     beneficiary = get_object_or_404(Beneficiary, pk=beneficiary_id)
@@ -121,3 +128,70 @@ def update_beneficiary(request, beneficiary_id):
         return redirect("beneficiary_list")  # Redirect to the list view
 
     return render(request, "update_beneficiary.html", {"beneficiary": beneficiary})
+
+
+def get_sample_data():
+    data = [
+        {
+            "beneficiary_id": "B001",
+            "philsys_id": "PH123456789",
+            "senior_citizen_id": None,
+            "biometric_fp": "FP123ABC",
+            "first_name": "Juan",
+            "middle_name": "Dela",
+            "last_name": "Cruz",
+            "birth_date": "1985-06-15",
+            "sex": "m",
+            "address_psgc": 101010,
+            "address": "123 Barangay St., City, Province",
+            "contact_number": "09123456789",
+            "email": "juan@email.com",
+            "status": 2,
+            "date_registered": datetime(2023, 1, 10, 10, 30),
+            "date_encoded": datetime(2023, 1, 10, 11, 0),
+            "last_updated": datetime(2023, 1, 12, 14, 20),
+            "last_updated_by": "admin",
+            "is_pantawid": True,
+            "pantawid_hhid": "HH123456",
+            "pantawid_lowb": 2
+        },
+        {
+            "beneficiary_id": "B002",
+            "philsys_id": None,
+            "senior_citizen_id": "SC987654321",
+            "biometric_fp": None,
+            "first_name": "Maria",
+            "middle_name": None,
+            "last_name": "Santos",
+            "birth_date": "1960-09-22",
+            "sex": "f",
+            "address_psgc": 202020,
+            "address": "456 Barangay St., City, Province",
+            "contact_number": None,
+            "email": "maria@email.com",
+            "status": 3,
+            "date_registered": datetime(2022, 5, 15, 9, 45),
+            "date_encoded": datetime(2022, 5, 15, 10, 15),
+            "last_updated": datetime(2023, 6, 10, 13, 10),
+            "last_updated_by": "encoder1",
+            "is_pantawid": False,
+            "pantawid_hhid": None,
+            "pantawid_lowb": None
+        }
+    ]
+
+    return data
+
+@login_required
+def data_visualization(request):
+    import pygwalker as pyg
+
+
+    data = get_sample_data()
+    df = pd.DataFrame(data)
+
+    # Generate the Graphic Walker HTML
+    pg_html = pyg.to_html(df)
+
+    # Pass it to the template
+    return render(request, "data_visualization.html", {"pg_html": pg_html})
