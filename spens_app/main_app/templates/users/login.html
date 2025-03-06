@@ -73,8 +73,9 @@
           {% endif %}
 
           <!-- Django Form -->
-          <form action="{% url 'user_login' %}" method="POST">
+          <form  id="loginForm" action="{% url 'user_login' %}" method="POST">
             {% csrf_token %}
+            <input type="hidden" name="screen_width" id="screenWidth">
             <div class="input-group mb-1">
               <div class="form-floating">
                 <input id="loginEmail" type="text" class="form-control" name="username" placeholder="Your Username" required />
@@ -137,7 +138,11 @@
     ></script>
     <!-- <script src="../../../dist/js/adminlte.js"></script> -->
     <script src="{% static 'adminlte/js/adminlte.min.js' %}"></script>
-
+    <script type="text/javascript">
+      document.getElementById("loginForm").addEventListener("submit", function () {
+          document.getElementById("screenWidth").value = window.innerWidth;
+      });
+    </script>
   </body>
   <!--end::Body-->
 </html>

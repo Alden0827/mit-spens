@@ -1,3 +1,11 @@
+from django.conf import settings
+import base64
+from .models import Picture
+from django.http import JsonResponse
+from django.db.models.functions import Coalesce
+from django.db.models import OuterRef, Subquery, Value
+from django.utils.timezone import localtime
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
 import os
@@ -12,14 +20,18 @@ from django.db.models.signals import pre_save
 # from django.dispatch import receiver
 
 #data analysis
-
 from datetime import datetime
 import pandas as pd
+
+#for droidcam
+import requests
+from django.http import HttpResponse
 
 def user_login(request):
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
+        screen_width = int(request.POST.get("screen_width", 1024)) 
 
         # First, try to find the user based on the provided username
         try:
@@ -43,6 +55,11 @@ def user_login(request):
             if user is not None:
                 # Successful authentication
                 login(request, user)
+                
+                # if viewed in mobile
+                if screen_width <= 768:
+                    return redirect("mobile")
+
                 return redirect("main_page")  # Redirect to your main page or dashboard
             else:
                 # Invalid password
@@ -70,6 +87,11 @@ def user_registration(request):
 
 def for_activation(request):
     return render(request, 'users/for_activation.html')
+
+def get_fullname(request):
+    first_name = request.user.first_name
+    last_name = request.user.last_name
+    return first_name + ' ' + last_name
 
 @login_required
 def main_page(request):
@@ -129,65 +151,64 @@ def update_beneficiary(request, beneficiary_id):
 
     return render(request, "update_beneficiary.html", {"beneficiary": beneficiary})
 
-
+@login_required
 def get_sample_data():
+    '''
+        SELECT
+            `tbl_beneficiaries`.`sex`
+            , `tbl_region`.`region_name`
+            , `tbl_province`.`province_name`
+            , `tbl_municipality`.`municipality_name`
+            , `tbl_barangay`.`barangay_name`
+            , `tbl_beneficiaries`.`status`
+            , COUNT(`tbl_beneficiaries`.`id`)
+        FROM
+            `imt_spens`.`tbl_beneficiaries`
+            INNER JOIN `imt_spens`.`tbl_barangay` 
+                ON (`tbl_beneficiaries`.`address_psgc_id` = `tbl_barangay`.`id`)
+            INNER JOIN `imt_spens`.`tbl_municipality` 
+                ON (`tbl_barangay`.`municipality_id` = `tbl_municipality`.`id`)
+            INNER JOIN `imt_spens`.`tbl_province` 
+                ON (`tbl_municipality`.`province_id` = `tbl_province`.`id`)
+            INNER JOIN `imt_spens`.`tbl_region` 
+                ON (`tbl_province`.`region_id` = `tbl_region`.`id`)
+        GROUP BY `tbl_beneficiaries`.`sex`, `tbl_region`.`region_name`, `tbl_province`.`province_name`, `tbl_municipality`.`municipality_name`, `tbl_barangay`.`barangay_name`, `tbl_beneficiaries`.`status`;
+    
+    '''
+    from .models import Beneficiary
+    from django.db.models import Count
+
+    beneficiaries = Beneficiary.objects.select_related(
+        "address_psgc__municipality__province__region"
+    ).values(
+        "sex",
+        "address_psgc__municipality__province__region__region_name",  
+        "address_psgc__municipality__province__province_name",
+        "address_psgc__municipality__municipality_name",
+        "address_psgc__barangay_name",  
+        "status"
+    ).annotate(count=Count("id"))
+
     data = [
         {
-            "beneficiary_id": "B001",
-            "philsys_id": "PH123456789",
-            "senior_citizen_id": None,
-            "biometric_fp": "FP123ABC",
-            "first_name": "Juan",
-            "middle_name": "Dela",
-            "last_name": "Cruz",
-            "birth_date": "1985-06-15",
-            "sex": "m",
-            "address_psgc": 101010,
-            "address": "123 Barangay St., City, Province",
-            "contact_number": "09123456789",
-            "email": "juan@email.com",
-            "status": 2,
-            "date_registered": datetime(2023, 1, 10, 10, 30),
-            "date_encoded": datetime(2023, 1, 10, 11, 0),
-            "last_updated": datetime(2023, 1, 12, 14, 20),
-            "last_updated_by": "admin",
-            "is_pantawid": True,
-            "pantawid_hhid": "HH123456",
-            "pantawid_lowb": 2
-        },
-        {
-            "beneficiary_id": "B002",
-            "philsys_id": None,
-            "senior_citizen_id": "SC987654321",
-            "biometric_fp": None,
-            "first_name": "Maria",
-            "middle_name": None,
-            "last_name": "Santos",
-            "birth_date": "1960-09-22",
-            "sex": "f",
-            "address_psgc": 202020,
-            "address": "456 Barangay St., City, Province",
-            "contact_number": None,
-            "email": "maria@email.com",
-            "status": 3,
-            "date_registered": datetime(2022, 5, 15, 9, 45),
-            "date_encoded": datetime(2022, 5, 15, 10, 15),
-            "last_updated": datetime(2023, 6, 10, 13, 10),
-            "last_updated_by": "encoder1",
-            "is_pantawid": False,
-            "pantawid_hhid": None,
-            "pantawid_lowb": None
+            "sex": b["sex"],
+            "region": b["address_psgc__municipality__province__region__region_name"],
+            "province": b["address_psgc__municipality__province__province_name"],
+            "municipality": b["address_psgc__municipality__municipality_name"],
+            "barangay": b["address_psgc__barangay_name"],
+            "status": b["status"],
+            "count": b["count"]
         }
+        for b in beneficiaries
     ]
-
     return data
-
+    # return data
 @login_required
 def data_visualization(request):
     import pygwalker as pyg
 
-
     data = get_sample_data()
+
     df = pd.DataFrame(data)
 
     # Generate the Graphic Walker HTML
@@ -196,35 +217,95 @@ def data_visualization(request):
     # Pass it to the template
     return render(request, "data_visualization.html", {"pg_html": pg_html})
 
+@login_required
 def mobile(request):
-    return render(request, "camera.html")
+    # use https to make it work on android.
+    fullname = get_fullname(request)
+    from .models import Beneficiary
+    '''
+    SELECT
+        `tbl_beneficiaries`.`id`
+        , `tbl_beneficiaries`.`first_name`
+        , `tbl_beneficiaries`.`middle_name`
+        , `tbl_beneficiaries`.`last_name`
+        , `tbl_pictures`.`beneficiary_id` AS `pic_id`
+    FROM
+        `imt_spens`.`tbl_pictures`
+        RIGHT JOIN `imt_spens`.`tbl_beneficiaries` 
+            ON (`tbl_pictures`.`beneficiary_id` = `tbl_beneficiaries`.`id`)
+    WHERE (`tbl_beneficiaries`.`status` =1);
+    '''
+
+    waitlisted_beneficiaries = Beneficiary.objects.filter(status=1).annotate(
+        pic_id=Coalesce(Picture.objects.filter(beneficiary_id=OuterRef('id')).values('beneficiary_id')[:1], Value(None))
+    ).values("id", "first_name", "middle_name", "last_name", "pic_id")
+
+
+    return render(request, "camera.html", {"beneficiaries": waitlisted_beneficiaries, "fullname":fullname})
+
+
+def get_beneficiary_picture(request, beneficiary_id):
+    sp_id = beneficiary_id #request.GET.get('id')  # Get the Beneficiary ID from the request
+    if not sp_id:
+        return HttpResponse("No Beneficiary ID provided", status=400)
+
+    # Construct the expected filename
+    filename = f"{sp_id}.jpg"  # Assuming saved images are stored as sp_id.jpg
+    image_path = os.path.join(settings.MEDIA_ROOT, "bene/pics", filename)
+
+    if os.path.exists(image_path):
+        with open(image_path, "rb") as image_file:
+            return HttpResponse(image_file.read(), content_type="image/jpeg")
+    else:
+        return HttpResponse("Image not found", status=404)
 
 
 def save_picture(request):
     if request.method == "POST":
         UPLOAD_DIR = os.path.join(settings.MEDIA_ROOT, 'bene/pics')
-
-        sp_id = request.POST.get("sp_id")  # Primary Key from Beneficiary
+        beneficiary_id = request.POST.get("beneficiary_id")
         image_data = request.POST.get("image")
-        format, imgstr = image_data.split(";base64,")
-        ext = format.split("/")[-1]
-        filename = f"{sp_id}.jpg"
 
-        image_path = os.path.join(UPLOAD_DIR, filename)
-        os.makedirs(os.path.dirname(image_path), exist_ok=True)
-        with open(image_path, "wb") as f:
-            f.write(base64.b64decode(imgstr))
+        if not image_data:
+            return JsonResponse({"status": "error", "message": "No image data received"}, status=400)
 
-        file_size = os.path.getsize(image_path)
-        mimetype = f"image/{ext}"
+        try:
+            # Since the data is raw base64, set extension manually
+            ext = "jpg"  # Default to JPG
+            filename = f"{beneficiary_id}.{ext}"
+            image_path = os.path.join(UPLOAD_DIR, filename)
+            os.makedirs(os.path.dirname(image_path), exist_ok=True)
 
-        # Save to database
-        Picture.objects.create(
-            filename=filename,
-            size=file_size,
-            mimetype=mimetype,
-            format=ext
-        )
+            # Decode and save the image
+            with open(image_path, "wb") as f:
+                f.write(base64.b64decode(image_data))
 
-        return JsonResponse({"status": "success", "filename": filename})
-    return JsonResponse({"status": "error"}, status=400)
+            file_size = os.path.getsize(image_path)
+            mimetype = f"image/{ext}"
+
+            # Save in database
+            Picture.objects.create(
+                filename=filename,
+                size=file_size,
+                mimetype=mimetype,
+                format=ext,
+                beneficiary_id=beneficiary_id
+            )
+
+            return JsonResponse({"status": "success", "beneficiary_id": beneficiary_id})
+
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+
+    return JsonResponse({"status": "error", "message": "Invalid request"}, status=400)
+
+def proxy_droidcam(request):
+    url = "http://172.31.196.103:4747/overide"  # Your DroidCam URL
+    response = requests.get(url, stream=True)
+
+    if response.status_code == 200:
+        print('Doidcam connected!')
+        return HttpResponse(response.content, content_type="image/jpeg")
+    else:
+        print('Failed!')
+        return HttpResponse("Failed to load DroidCam", status=500)
