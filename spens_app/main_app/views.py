@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-
+import os
 #for user management
 from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm
@@ -195,3 +195,36 @@ def data_visualization(request):
 
     # Pass it to the template
     return render(request, "data_visualization.html", {"pg_html": pg_html})
+
+def mobile(request):
+    return render(request, "camera.html")
+
+
+def save_picture(request):
+    if request.method == "POST":
+        UPLOAD_DIR = os.path.join(settings.MEDIA_ROOT, 'bene/pics')
+
+        sp_id = request.POST.get("sp_id")  # Primary Key from Beneficiary
+        image_data = request.POST.get("image")
+        format, imgstr = image_data.split(";base64,")
+        ext = format.split("/")[-1]
+        filename = f"{sp_id}.jpg"
+
+        image_path = os.path.join(UPLOAD_DIR, filename)
+        os.makedirs(os.path.dirname(image_path), exist_ok=True)
+        with open(image_path, "wb") as f:
+            f.write(base64.b64decode(imgstr))
+
+        file_size = os.path.getsize(image_path)
+        mimetype = f"image/{ext}"
+
+        # Save to database
+        Picture.objects.create(
+            filename=filename,
+            size=file_size,
+            mimetype=mimetype,
+            format=ext
+        )
+
+        return JsonResponse({"status": "success", "filename": filename})
+    return JsonResponse({"status": "error"}, status=400)

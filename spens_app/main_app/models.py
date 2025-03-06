@@ -353,3 +353,17 @@ class AuditTrail(models.Model):
 
     def __str__(self):
         return f"Change in {self.changed_field} for {self.beneficiary.beneficiary_id} by {self.changed_by}"
+
+class Picture(models.Model):
+    id = models.AutoField(primary_key=True)
+    beneficiary = models.ForeignKey(Beneficiary, on_delete=models.CASCADE) 
+    filename = models.CharField(max_length=255)
+    size = models.PositiveIntegerField()
+    mimetype = models.CharField(max_length=50)
+    format = models.CharField(max_length=10)
+
+    class Meta:
+        db_table = 'tbl_pictures'
+
+    def __str__(self):
+        return self.filename

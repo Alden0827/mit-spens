@@ -15,6 +15,9 @@ urlpatterns = [
     path("test/", views.empty_page, name="empty_page"),
     path('logout/', views.user_logout, name='logout'),
     path('visualization/', views.data_visualization, name='data_visualization'),
+    path('save_picture/', views.save_picture, name='save_picture'),
+    path('mobile/', views.mobile, name='mobile'),
+
 
 
 
