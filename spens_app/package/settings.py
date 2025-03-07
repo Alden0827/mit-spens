@@ -39,8 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'main_app', 
+    'dedupe_app'
 ]
 
+# Celery settings
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # or your preferred broker
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'  # or your result backend
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,7 +63,9 @@ ROOT_URLCONF = 'package.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'spens_app/templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

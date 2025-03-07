@@ -1,0 +1,738 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Pantawid | Data Processing Services
+{% endblock %}
+
+{% block content-header %}
+
+{% endblock %}
+
+{% block content %}
+
+
+
+        <!--begin::App Content Header-->
+        <div class="app-content-header">
+          <!--begin::Container-->
+          <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+              <div class="col-sm-6"><h3 class="mb-0">DQA Datasets</h3></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                </ol>
+              </div>
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Container-->
+        </div>
+
+
+        <div class="row">
+          <!-- /.col -->
+          <div class="col-md-10">
+
+            <!-- add card tag here -->
+            <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Datasets Catalogue </h3>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body p-0">
+                    <table class="table table-striped projects">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%">
+                                    #
+                                </th>
+                                <th style="width: 30%">
+                                    Description
+                                </th>
+                                <th style="width: 20%">
+                                    Progress
+                                </th>
+                                <th style="width: 10%" class="text-center">
+                                    DS Status
+                                </th>
+                                <th style="width: 10%">
+                                  TASK COUNT
+                                </th>
+
+                                <th style="width: 15%">
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dataset in datasets %}
+                            <tr job_id="{{ dataset.dataset_uid }}">
+                                <td>
+                                    {{ dataset.dataset_id }}
+                                </td>
+                                <td>
+                                    <a>{{ dataset.description }}</a>
+                                    <br/>
+                                    <small>
+                                        Date: {{ dataset.time_added }} <BR>
+                                        <span style="color:  #993d00;">{{ dataset.dataset_uid }}</span>
+                                    </small>
+                                </td>
+                                <td class="project_progress">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="100" style='width: {{ dataset.average_progress|floatformat:2 }}%'>
+                                        </div>
+                                    </div>
+                                    <small>
+                                        <span class="progress-text">{{ dataset.average_progress|floatformat:2 }}</span>% Complete 
+                                    </small>
+                                </td>
+                                <td class="project-state">
+                                  <span class="badge badge-info">{{ dataset.dataset_status_id__dataset_status }}</span>
+                                </td>
+                                <td class="project-state">
+                                  <span class="badge badge-info">{{ dataset.task_count }}</span>
+                                </td>                                
+                                <td class="project-actions text-right" request-id="{{ dataset.request_id }}">
+                                    {% if dataset.status == 2 %}
+                                    <a class="btn btn-primary btn-sm btn-download" href="#" >
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                    {% endif %}
+                                    {% if dataset.status == 1%}
+                                    <a class="btn btn-info btn-sm btn-live" href="#">
+                                        <i class="fas fa-eye">
+                                        </i>
+                                    </a>                                    
+                                    {% endif %}
+
+                                    <a class="btn btn-danger btn-sm btn-delete" href="#">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                    </a>
+
+                                    <a class="btn btn-info btn-sm btn-show-profiling" href="#">
+                                        <i class="fas fa-search"></i>
+                                    </a>
+
+                                    <a class="btn btn-warning btn-sm btn-walker-open-modal" href="#">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </a>
+
+                                    {% if dataset.status == 6%}
+                                    <a class="btn btn-danger btn-sm btn-info" href="{% url 'template_rectifier' dataset.request_id %}" data-toggle="tooltip" title="Rectify template">
+                                        <i class="fas fa-th-list">
+                                        </i>
+                                    </a>
+                                    {% endif %}
+
+
+                                </td>
+                            </tr>
+                             {% endfor %}
+                        
+                        </tbody>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+
+
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-2">
+
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+<button type="button" 
+        class="btn btn-secondary d-block w-100 btn-new-ds-import" 
+        data-bs-toggle="modal" 
+        data-bs-target="#modal-dataset-from-file"
+        data-bs-backdrop="static" 
+        data-bs-keyboard="false">
+  <i class="fas fa-database"></i> Import Dataset from file
+</button>
+<button type="button" 
+        class="btn btn-secondary d-block w-100 btn-new-4ps-dataset" 
+        data-bs-toggle="modal" 
+        data-bs-target="#modal-dataset-from-roster"
+        data-bs-backdrop="static" 
+        data-bs-keyboard="false">
+  <i class="fas fa-users"></i> Generate Dataset from Roster of beneficiaries
+</button>
+              </div>
+
+
+            </div>
+
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+
+{% endblock %}
+
+{% block css_script %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+{% endblock %}
+
+
+{% block models %}
+
+<script type="text/javascript">
+    function validateFile(input) {
+    const file = input.files[0];
+    const maxSize = 100 * 1024 * 1024; // 100 MB
+
+    if (file.size > maxSize) {
+        alert("File size exceeds 100MB limit.");
+        input.value = ""; // Clear the input
+        return false;
+    }
+    return true;
+}
+</script>
+
+<div class="modal fade" id="modal-dataset-from-file" tabindex="-1" aria-labelledby="modal-dataset-from-fileLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="overlay overlay-spinner">
+        <i class="fas fa-2x fa-sync fa-spin"></i>
+      </div>
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-dataset-from-fileLabel">New Data Processing Request</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="form-import" method="POST" action="{% url 'deduplicator_run_task' %}" enctype="multipart/form-data">
+        <div class="modal-body">
+          {% csrf_token %}
+          <div class="card card-info">
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="exampleInputFile" class="form-label">File input</label>
+                <div class="input-group">
+                  <input type="file" class="form-control" id="exampleInputFile" name="document_file" accept=".xlsx" onchange="validateFile(this)">
+                  <label class="input-group-text" for="exampleInputFile">Upload</label>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" value="test1" class="form-control" id="description" name="description" placeholder="">
+              </div>
+              <div class="mb-3">
+                <label for="matching_type" class="form-label">Task Classification</label>
+                <select class="form-select" id="matching_type" name="matching_type">
+                  <option value="1" selected>Deduplication</option>
+                  <option value="2">Name matching vs Pantawid Data.</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="scoringMethod" class="form-label">Scoring Method</label>
+                <select class="form-select" id="scoringMethod" name="scoring_method">
+                  <option value="WRatio">A weighted ratio combining several other scoring methods, providing a comprehensive similarity score.</option>
+                  <option value="ratio" selected>A basic Levenshtein distance ratio, measuring the edit distance between two strings.</option>
+                  <option value="partial_ratio">Measures similarity based on the best partial match between substrings of the query and choices.</option>
+                  <option value="token_sort_ratio">Sorts tokens (words) within strings before comparing, useful for strings where word order is not important.</option>
+                  <option value="token_set_ratio">Considers the intersection and union of tokens, useful for comparing strings with similar but differently ordered or missing words.</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="threshold" class="form-label">Threshold</label>
+                <div class="input-group">
+                  <span class="input-group-text">%</span>
+                  <input type="number" value="90" class="form-control" id="threshold" name="threshold" placeholder="a minimum score cutoff that a match must achieve to be considered relevant">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="limit" class="form-label">Limit</label>
+                <div class="input-group">
+                  <span class="input-group-text">R</span>
+                  <input type="number" value="5" class="form-control" id="limit" name="limit" placeholder="maximum number of matches to return">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-warning btn-dataset-save" mode="run-later">Import</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<!-- ------------------------------------------- -->
+<div class="modal fade" id="modal-dataset-from-roster" tabindex="-1" aria-labelledby="modal-dataset-from-rosterLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <!-- Spinner overlay -->
+      <div class="overlay overlay-spinner" style="display: none;">
+        <i class="fas fa-2x fa-sync fa-spin"></i>
+      </div>
+      <!-- Modal header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-dataset-from-rosterLabel">New Dataset from Roster</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- Form -->
+      <form id="form-import-pantawid-ds" method="POST" action="{% url 'deduplicator_run_task' %}" enctype="multipart/form-data">
+        <div class="modal-body">
+          {% csrf_token %}
+          <div class="card card-info">
+            <div class="card-body">
+              <!-- Province Selection -->
+              <div class="mb-3">
+                <label for="province" class="form-label">Province</label>
+                <select class="form-select select2" id="province" name="province">
+                  <option value="" selected>ENTIRE REGION</option>
+                  <option value="COTABATO (NORTH COTABATO)">COTABATO (NORTH COTABATO)</option>
+                  <option value="SOUTH COTABATO">SOUTH COTABATO</option>
+                  <option value="SULTAN KUDARAT">SULTAN KUDARAT</option>
+                  <option value="SARANGANI">SARANGANI</option>
+                  <!-- Dynamically load provinces -->
+                </select>
+              </div>
+              <!-- Municipality Selection -->
+              <div class="mb-3">
+                <label for="municipality" class="form-label">Municipality/City</label>
+                <select class="form-select select2" id="municipality" name="municipality">
+                  <option value="" selected>Entire Province</option>
+                  <!-- Dynamically load municipalities -->
+                </select>
+              </div>
+              <!-- Barangay Selection -->
+              <div class="mb-3">
+                <label for="barangay" class="form-label">Barangay</label>
+                <select class="form-select select2" id="barangay" name="barangay">
+                  <option value="" selected>Entire Barangay</option>
+                  <!-- Dynamically load barangays -->
+                </select>
+              </div>
+
+              <!-- CCT_type Selection -->
+              <div class="mb-3">
+                <label for="cct_type" class="form-label">CCT-Type</label>
+                <select class="form-select select2" id="cct_type" name="cct_type">
+                  <option value="" selected>ALL</option>
+                  <option value="RCCT" selected>Regular CCT</option>
+                  <option value="MCCT" selected>Modified CCT</option>
+                </select>
+              </div>
+
+              <!-- Radio Buttons for Roster Selection -->
+              <div class="mb-3">
+                <label class="form-label">Roster Type</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="roster_type" id="entire_hh" value="entire_hh" checked>
+                  <label class="form-check-label" for="entire_hh">Entire HH Roster</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="roster_type" id="grantee_only" value="grantee_only">
+                  <label class="form-check-label" for="grantee_only">Grantee Only</label>
+                </div>
+              </div>
+              <!-- Text Area for Description -->
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter dataset description">Pantawid Roster of beneficiaries</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-warning btn-import-pantawid-dataset" mode="run-later">Save</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+    <!-- Modal ------------------------------------------- -->
+<!-- Profiling Modal -->
+<div class="modal fade" id="profilingModal" tabindex="-1" aria-labelledby="profilingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" style="max-width: 75%; height: 90vh;">
+        <div class="modal-content" style="height: 100%;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profilingModalLabel">Data Profiling Report</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Iframe -->
+                <iframe class="api_data_profiling" 
+                    src="" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:none;">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Walker Modal -->
+<div class="modal fade" id="walkerModal" tabindex="-1" aria-labelledby="walkerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" style="max-width: 75%; height: 90vh;">
+        <div class="modal-content" style="height: 100%;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="walkerModalLabel">Data Visualization</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Iframe -->
+                <iframe class="api_data_walker" 
+                    src="" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:none;">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ------------------------------------------- -->
+{% endblock %}
+
+{% block javascript %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        let base_url = "{{ base_url }}";
+        let new_dedupe_modal = $("#modal-dataset-from-file");
+        // -------------------------------------------------------------------------------------------
+        $('.btn-new-ds-import').on('click',function(){
+            setTimeout(function() {
+              $('.overlay-spinner').removeClass('overlay');
+              $('.overlay-spinner').html('');
+            }, 500);
+        });
+
+        let new_dedupe_patantawid_modal = $("#modal-dataset-from-roster");
+        $('.btn-new-4ps-dataset').on('click',function(){
+            setTimeout(function() {
+              $('.overlay-spinner').removeClass('overlay');
+              $('.overlay-spinner').html('');
+            }, 500);
+        });
+
+
+
+        //-------------------------------------------------------------------------------------------
+
+
+   
+      // Load municipalities when a province is selected
+      $("#province").change(function () {
+        const selectedProvince = $(this).val();
+        if (selectedProvince) {
+
+            $.ajax({
+              url: "django_url_api_lib_municipality",
+              method: "POST",
+              contentType: "application/json",  // Make sure content type is JSON
+              data: JSON.stringify({ province: selectedProvince }),  // Use JSON.stringify() here
+              headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+              },
+              success: function (response) {
+                $("#municipality").empty().append('<option value="">Entire Province</option>');
+                $("#barangay").empty().append('<option value="">Entire Municipality</option>');
+                $.each(response.data, function (index, municipality) {
+                  $("#municipality").append(
+                    `<option value="${municipality}">${municipality}</option>`
+                  );
+                });
+              },
+              error: function (xhr) {
+                console.error("Failed to load municipalities:", xhr.responseText);
+              },
+            });
+        }
+      });
+
+      // Load barangays when a municipality is selected
+      $("#municipality").change(function () {
+        const selectedMunicipality = $(this).val();
+        if (selectedMunicipality) {
+
+            $.ajax({
+              url: "django_url_api_lib_barangay",
+              method: "POST",
+              contentType: "application/json",  // Make sure content type is JSON
+              data: JSON.stringify({ municipality: selectedMunicipality }),  // Use JSON.stringify() here
+              headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+              },
+              success: function (response) {
+                $("#barangay").empty().append('<option value="">Entire Barangay</option>');
+                $.each(response.data, function (index, barangay) {
+                  $("#barangay").append(
+                    `<option value="${barangay}">${barangay}</option>`
+                  );
+                });
+              },
+              error: function (xhr) {
+                console.error("Failed to load municipalities:", xhr.responseText);
+              },
+            });
+        }
+      });
+
+
+
+
+        // -----------------------------------------------------------------------------------------
+
+        function generateGUID() {
+            return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+        }
+
+        $(document).on('click','.btn-delete',function(e){
+            e.preventDefault();
+            let dataset_uid = $(this).closest('tr').attr("job_id");
+            let csrftoken = getCookie('csrftoken'); 
+            let tr = $(this).closest('tr');
+            Swal.fire({
+              title: "Warning deleting dataset will also delete all tansactions associated with it. Do you want to continue?",
+              text: "You won't be able to revert this!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "django_url_dataset_delete",
+                    headers: {
+                        'X-CSRFToken': csrftoken // Include CSRF token in headers
+                    },
+                    data: {
+                        dataset_uid: dataset_uid
+                    },
+                     // contentType: false,
+                     // processData: false,
+                    cache: false,
+                    async: true,
+                    success: function (res) {
+                        if (res.success) {
+                            tr.fadeOut(200, function() { // Fades out in 200ms
+                                tr.remove(); // Removes the <tr> after fading out
+                            });
+                            Swal.fire({
+                              title: "Deleted!",
+                              text: "Your dataset been deleted.",
+                              icon: "success"
+                            });   
+                            //location.reload();                         
+                        }else{
+                            Swal.fire({
+                              title: "Unable Deleted!",
+                              text: res.message,
+                              icon: "error"
+                            });  
+                        }
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    },
+                })
+              }
+            });
+        });     
+   
+
+        $(document).on('click','.btn-import-pantawid-dataset', function(e){
+            e.preventDefault();
+            let mode = $(this).attr("mode");
+            let request_id = generateGUID();
+            let spinner = '<i class="fas fa-2x fa-sync fa-spin"></i>'
+
+            //show spinner            
+            $('.overlay-spinner').addClass('overlay');
+            $('.overlay-spinner').html(spinner);
+
+            if (mode == 'run-later') {
+            
+                let formData = new FormData($("#form-import-pantawid-ds")[0])
+                $.ajax({
+                    type: "POST",
+                    url: "django_url_generate_pantawid_dataset",
+                    data: formData,
+                    headers: {
+                      'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    async: true,
+                    success: function (res) {
+                        console.log(res);
+                        if (res.success) {
+                            Swal.fire({
+                              position: "top-end",
+                              icon: "success",
+                              title: "Task Pantawid dataset added successfully!",
+                              showConfirmButton: false,
+                              timer: 1500
+                            }).then((result) => {
+                                window.location.href = "django_url_dataset_listing";
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        alert(err);
+                        //hide spinner
+                        $('.overlay-spinner').removeClass('overlay');
+                        $('.overlay-spinner').html('');
+                    },
+                })
+            }
+            
+        });
+
+        $(document).on('click','.btn-dataset-save',function(e){
+            e.preventDefault();
+            let mode = $(this).attr("mode");
+            let request_id = generateGUID();
+            let spinner = '<i class="fas fa-2x fa-sync fa-spin"></i>'
+
+            //show spinner            
+            $('.overlay-spinner').addClass('overlay');
+            $('.overlay-spinner').html(spinner);
+
+            if (mode == 'run-later') {
+            
+            // setTimeout(function() {
+            //   $('.overlay').remove();
+            // }, 3000);
+
+                let formData = new FormData($("#form-import")[0])
+                $.ajax({
+                    type: "POST",
+                    url: "django_url_upload-template",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    async: true,
+                    success: function (res) {
+                        if (res.success) {
+                            Swal.fire({
+                              position: "top-end",
+                              icon: "success",
+                              title: "Task added successfully!",
+                              showConfirmButton: false,
+                              timer: 1500
+                            }).then((result) => {
+                                location.reload();
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        alert(err);
+                        //hide spinner
+                        $('.overlay-spinner').removeClass('overlay');
+                        $('.overlay-spinner').html('');
+                    },
+                })
+            }
+
+        });
+
+
+
+        $(document).on('click', '.btn-show-profiling', function(e) {
+            e.preventDefault();
+
+            // Show SweetAlert confirmation with a custom message
+            Swal.fire({
+                title: 'This module is for data statician only!',
+                text: "Loading the profiling data may take some time depending on the volume of data. Do you want to proceed?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Proceed',
+                cancelButtonText: 'No, Cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If confirmed, get the job_id and proceed to load the profiling data
+                    let job_id = $(this).closest('tr').attr('job_id');
+                    $(".api_data_profiling").attr('src', "/api/data/profiling/" + job_id);
+                    $("#profilingModal").modal('show');
+                }
+            });
+        });
+
+        $(document).on('click', '.btn-walker-open-modal', function (e) {
+            e.preventDefault();
+            
+            // Show SweetAlert confirmation with a custom message
+            Swal.fire({
+                title: 'You are about to open data data visualization module!',
+                text: "This action may take time depending on the volume of data. Do you want to proceed?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Proceed',
+                cancelButtonText: 'No, Cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Proceed with the action if confirmed
+                    let job_id = $(this).closest('tr').attr('job_id');
+                    window.location.href = " url 'data_visualization' '0' ".replace('0', job_id);
+                }
+            });
+        });
+
+
+
+
+    }); //document-ready (ends)
+
+
+
+
+</script>
+
+{% endblock %}

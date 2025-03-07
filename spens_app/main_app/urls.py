@@ -19,7 +19,7 @@ urlpatterns = [
     path('mobile/', views.mobile, name='mobile'),
     
     path('api/bene/pics/<int:beneficiary_id>/', views.get_beneficiary_picture, name='get_beneficiary_picture'),
-    path('dqa/', views.deduplication_page, name='deduplication_page'),
+    path('deduplication_page/', views.deduplication_page, name='deduplication_page'),
     
 
 

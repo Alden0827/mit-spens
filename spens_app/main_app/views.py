@@ -152,7 +152,7 @@ def update_beneficiary(request, beneficiary_id):
     return render(request, "update_beneficiary.html", {"beneficiary": beneficiary})
 
 @login_required
-def get_sample_data():
+def get_sample_data(request):
     '''
         SELECT
             `tbl_beneficiaries`.`sex`
@@ -207,7 +207,7 @@ def get_sample_data():
 def data_visualization(request):
     import pygwalker as pyg
 
-    data = get_sample_data()
+    data = get_sample_data(request)
 
     df = pd.DataFrame(data)
 
