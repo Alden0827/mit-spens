@@ -309,3 +309,7 @@ def proxy_droidcam(request):
     else:
         print('Failed!')
         return HttpResponse("Failed to load DroidCam", status=500)
+
+@login_required
+def deduplication_page(request):
+     return render(request, "dqa/deduplication_task.html")

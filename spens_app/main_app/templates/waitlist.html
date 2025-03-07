@@ -24,7 +24,7 @@
           <div class="container-fluid">
             <!--begin::Row-->
             <div class="row">
-              <div class="col-sm-6"><h3 class="mb-0">Waitlist Encoding</h3></div>
+              <div class="col-sm-6"><h3 class="mb-0">Beneficiary Encoding & Validation</h3></div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -50,6 +50,30 @@
             <div class="col-12 col-md-12 col-lg-9 order-2 order-md-1">
 
               <div class="row">
+
+                <div class="stepper">
+                    <div class="step step-active" >
+                        <span class="circle">1</span>
+                        <p>Step 1</p>
+                        <div class="step-desc">Encoding and Validation</div>
+                    </div>
+                    <div class="step ">
+                        <span class="circle">2</span>
+                        <p>Step 2</p>
+                        <div class="step-desc">DQA</div>
+                    </div>
+                    <div class="step">
+                        <span class="circle">3</span>
+                        <p>Step 3</p>
+                        <div class="step-desc">Recommendation</div>
+                    </div>
+                    <div class="step">
+                        <span class="circle">4</span>
+                        <p>Step 4</p>
+                        <div class="step-desc">Approval</div>
+                    </div>
+                </div>
+
                 <div class="col-12">
                     <!-- Search Box Section -->
                     <div class="card card-primary card-outline mb-4">
@@ -60,7 +84,7 @@
                             <form>
                                 <div class="row g-3">
                                     <!-- Province Dropdown -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                             <label for="province" class="form-label">Province</label>
                                             <select class="form-select" id="province">
                                                 <option value="">Select Province</option>
@@ -69,7 +93,7 @@
                                     </div>
                                     
                                     <!-- Municipality Dropdown -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                             <label for="municipality" class="form-label">Municipality</label>
                                             <select class="form-select" id="municipality">
                                                 <option value="">Select Municipality</option>
@@ -78,7 +102,7 @@
                                     </div>
                                     
                                     <!-- Barangay Dropdown -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                            <label for="barangay" class="form-label">Barangay</label>
                                             <select class="form-select" id="barangay">
                                                 <option value="">Select Barangay</option>
@@ -87,13 +111,13 @@
                                     </div>
 
                                     <!-- Philsys ID Textbox -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                             <label for="philsys_id" class="form-label">PhilSys ID</label>
                                             <input type="text" class="form-control" id="philsys_id" placeholder="Enter PhilSys ID">
                                     </div>
                                     
                                     <!-- Beneficiary Name Textbox -->
-                                    <div class="col-md-8">
+                                    <div class="col-md-4">
                                             <label for="beneficiary_name" class="form-label">Beneficiary Name</label>
                                             <input type="text" class="form-control" id="beneficiary_name" placeholder="Enter Beneficiary Name">
                                     </div>
@@ -603,7 +627,7 @@
 
                       <div class="row mt-2">
                           <div class="col-md-3">
-                              <label for="is_pantawid" class="form-label">Is Pantawid Beneficiary?</label>
+                              <label for="is_pantawid" class="form-label">4Ps Beneficiary?</label>
                               <select class="form-select editable-form-control" id="is_pantawid" name="is_pantawid">
                                   <option value="False">No</option>
                                   <option value="True">Yes</option>

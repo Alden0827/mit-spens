@@ -1,0 +1,936 @@
+{% extends "base.html" %}
+
+
+{% load static %}
+
+{% block title %}
+ {{app_program}} {{app_name}} | Deduplication
+{% endblock %}
+
+
+{% block css_script %}
+<!--       <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
+      <link href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.min.css" rel="stylesheet"> -->
+      <script src="{% static 'xterm/xterm.min.js' %}"></script>
+      <link rel="stylesheet" href="{% static 'xterm/xterm.min.css' %}">
+
+      <style>
+        .red-text {
+          color: red;
+          font-weight: bold;
+          font-style: italic;
+        }
+        .custom-container {
+            width: 90%; /* Adjust the width as per your requirement */
+            margin: 0 auto; /* Center the container horizontally */
+        }
+
+
+      </style>
+{% endblock %}
+
+
+{% block content %}
+
+        <!--begin::App Content Header-->
+        <div class="app-content-header">
+          <!--begin::Container-->
+          <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+              <div class="col-sm-6"><h3 class="mb-0">DQA - Deduplication</h3></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Deduplication</li>
+                </ol>
+              </div>
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Container-->
+        </div>
+
+
+<div class="card task" status='{{task.status_id.status_id}}' trans_id='{{task.trans_id}}' task_class='{{task.classification_id.classification_id}}'>
+        <div class="card-header">
+          <h3 class="card-title">Task: <span class="trans_id">{{task.trans_id}} - </span> <span class="task-description"></span></h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+
+            <!-- left side container -->
+            <div class="col-12 col-md-12 col-lg-10 order-2 order-md-1">
+
+
+                <div class="card card-primary card-outline card-outline-tabs">
+                  <div class="card-header p-0 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true">Task</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill" href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false">Information</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-body">
+
+                    <div class="tab-content" id="custom-tabs-four-tabContent">
+                      
+                      <div class="tab-pane fade active show" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+                          <div class="row">
+                            <div class="col-12 col-sm-12">
+                              <div class="stepper">
+                                  <div class="step " >
+                                      <span class="circle">1</span>
+                                      <p>Step 1</p>
+                                      <div class="step-desc">Encoding and Validation</div>
+                                  </div>
+                                  <div class="step step-active">
+                                      <span class="circle">2</span>
+                                      <p>Step 2</p>
+                                      <div class="step-desc">DQA</div>
+                                  </div>
+                                  <div class="step">
+                                      <span class="circle">3</span>
+                                      <p>Step 3</p>
+                                      <div class="step-desc">Recommendation</div>
+                                  </div>
+                                  <div class="step">
+                                      <span class="circle">4</span>
+                                      <p>Step 4</p>
+                                      <div class="step-desc">Approval</div>
+                                  </div>
+                              </div>
+                              <br>
+                            </div>
+
+                          </div>
+
+                          <div class="row">
+                            <div class="col-12 col-sm-2">
+
+                              <div class="info-box">
+                                <span class="info-box-icon text-bg-primary shadow-sm">
+                                  <i class="bi bi-gear-fill"></i>
+                                </span>
+                                <div class="info-box-content">
+                                  <span class="info-box-text">No. of records</span>
+                                  <span class="info-box-number">
+                                    {{task.row_count}}
+                                  </span>
+                                </div>
+                              </div>
+
+
+                            </div>
+                            <div class="col-12 col-sm-2">
+
+                              <div class="info-box">
+                                <span class="info-box-icon text-bg-primary shadow-sm">
+                                  <i class="bi bi-gear-fill"></i>
+                                </span>
+                                <div class="info-box-content">
+                                  <span class="info-box-text">Status</span>
+                                  <span class="info-box-number">
+                                    {{task.status_id.status}}
+                                  </span>
+                                </div>
+                              </div>
+
+
+
+                            </div>
+                            <div class="col-12 col-sm-2">
+
+                              <div class="info-box">
+                                <span class="info-box-icon text-bg-primary shadow-sm">
+                                  <i class="bi bi-gear-fill"></i>
+                                </span>
+                                <div class="info-box-content">
+                                  <span class="info-box-text">Progress</span>
+                                  <span class="info-box-number">
+                                    {{task.progress}}<small>%</small>
+                                  </span>
+                                  
+                                </div>
+                              </div>
+                            </div>
+                            <!--  -->
+                            
+                            <div class="col-12 col-sm-2">
+
+                              <div class="info-box">
+                                <span class="info-box-icon text-bg-primary shadow-sm">
+                                  <i class="bi bi-gear-fill"></i>
+                                </span>
+                                <div class="info-box-content">
+                                  <span class="info-box-text">Time Added</span>
+                                  <span class="info-box-number task-time-added-container">
+                                    ...
+                                  </span>
+                                </div>
+                              </div>
+
+                            </div>
+                            <div class="col-12 col-sm-2">
+
+
+                              <div class="info-box">
+                                <span class="info-box-icon text-bg-primary shadow-sm">
+                                  <i class="bi bi-gear-fill"></i>
+                                </span>
+                                <div class="info-box-content">
+                                  <span class="info-box-text">Checkpoint</span>
+                                  <span class="info-box-number task-last-checkpoint-container">
+                                    ...
+                                  </span>
+                                </div>
+                              </div>
+
+                            </div>
+                            <div class="col-12 col-sm-2">
+
+
+                              <div class="info-box">
+                                <span class="info-box-icon text-bg-primary shadow-sm">
+                                  <i class="bi bi-gear-fill"></i>
+                                </span>
+                                <div class="info-box-content">
+                                  <span class="info-box-text">Dataset</span>
+                                  <span class="info-box-number  source-dataset-info-containe">
+                                    ...
+                                  </span>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                                <div class="col-md-12  col-lg-12  sm-12 mb-5">
+                                    <div class="card bg-light">
+                                        <div class="card-body">
+                                           <div class="row">
+                                                <div id="import-progress-container" class="col-md-12">
+                                                    <div id="import-progress-message">Progress</div>
+                                                    <div class="progress">
+                                                        <div id="import-progress-bar"
+                                                            class="progress-bar progress-bar-striped progress-bar-animated"
+                                                            role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-lg-12 sm-12 mb-5">
+                                    <div class="card bg-light">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-12">
+                                                    <div class="terminal" id="terminal" last_line="" ></div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                          </div>
+
+
+                      </div>
+                      <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+
+                            <div class="card">
+                              <div class="card-header">
+                                <h3 class="card-title">Striped Full Width Table</h3>
+                              </div>
+                              <!-- /.card-header -->
+                              <div class="card-body p-0">
+                                <table class="table table-striped">
+                                  <thead>
+                                    <tr>
+                                      <th style="width: 10px">#</th>
+                                      <th>PARTICULAR</th>
+                                      <th>VALUE</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+
+
+                                      <tr>
+                                        <td>1.</td>
+                                        <td>Classification</td>
+                                        <td><span class="info-classification"></span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>2.</td>
+                                        <td>Dataset Date</td>
+                                        <td><span class="info-dataset_date"></span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>3.</td>
+                                        <td>Dataset Description</td>
+                                        <td><span class="info-dataset_description"></span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>4.</td>
+                                        <td>Dataset UID</td>
+                                        <td><span class="info-dataset_uid"></span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>5.</td>
+                                        <td>Task Description</td>
+                                        <td><span class="info-description"></span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>6.</td>
+                                        <td>Task Process ID</td>
+                                        <td><span class="info-process_id"></span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>7.</td>
+                                        <td>Dataset Row Count</td>
+                                        <td><span class="info-row_count"></span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>8.</td>
+                                        <td>Task Progress</td>
+                                        <td><span class="info-progress"></span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>9.</td>
+                                        <td>Last Checkpoint Time</td>
+                                        <td><span class="info-checkpoint_time"></span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>10.</td>
+                                        <td>Task Time Added</td>
+                                        <td><span class="info-time_added"></span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>11.</td>
+                                        <td>Task ID</td>
+                                        <td><span class="info-trans_id"></span></td>
+                                      </tr>
+                                      <tr>
+                                        <td>12.</td>
+                                        <td>Task Status</td>
+                                        <td><span class="info-trans_status"></span></td>
+                                      </tr>
+
+
+                                  </tbody>
+                                </table>
+                              </div>
+                              <!-- /.card-body -->
+                            </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card -->
+                </div>
+                
+
+
+            </div>
+            <!-- end: left side container -->
+
+
+
+            <!-- right-side container -->
+            <div class="col-12 col-md-12 col-lg-2 order-1 order-md-2">
+				<div class="row">
+				    <div class="col-md-12">
+				       <div class="card card-widget widget-user-2 shadow-sm">
+				          <div class="card-footer p-0">
+				             <ul class="nav flex-column">
+                                <li class="nav-item">
+                                   <a href="#" class="nav-link btn btn-info task-start 
+                                     {% if task.status_id.status_id == 2 or task.status_id.status_id == 4 or task.status_id.status_id == 5 %}
+                                        disabled
+                                     {% endif %}        
+                                   ">
+                                   <i class="fas fa-tasks"></i> Start 
+                                   </a>
+                                </li>
+				                <li class="nav-item">
+				                   <a href="#" class="nav-link btn btn-info task-cancel
+                                     {% if task.status_id.status_id == 2 or task.status_id.status_id == 4 or task.status_id.status_id == 0 or task.status_id.status_id == 1%}
+                                        disabled
+                                     {% endif %}  
+                                   ">
+				                   <i class="fas fa-stop "></i> Stop 
+				                   </a>
+				                </li>
+				                <li class="nav-item">
+				                   <a href="#" class="nav-link btn btn-info task-reset
+                                     {% if task.status_id.status_id == 0 or task.status_id.status_id == 3 %}
+                                        disabled
+                                     {% endif %}    
+                                   ">
+				                   <i class="fas fa-redo"></i> Reset
+				                   </a>
+				                </li>
+				                <li class="nav-item">
+				                   <a href="#" class="nav-link btn btn-info task-download
+                                     {% if task.status_id.status_id != 2 %}
+                                        disabled
+                                     {% endif %}    
+                                   ">
+				                   <i class="fas fa-download"></i> Download 
+				                   </a>
+				                </li>
+				             </ul>
+				          </div>
+				       </div>
+				    </div>
+				</div>
+
+<br>
+<h3 class="text-primary"><i class="fas fa-paint-brush"></i> Info:</h3>
+                <p class="text-muted">
+                    <span id="truncatedText">This page is a sophisticated tool designed to identify and eliminate duplicate records within a dataset, ensuring that each entry is unique. This process helps maintain clean and efficient databases, which is crucial for data integrity and accurate analysis. The app employs advanced mathematical computations to compare similarities and accurately identify possible duplicates. Once the deduplication process is complete, users can download the refined dataset in Excel format, now free of duplicates, for further use or analysis. This approach not only significantly improves data quality but also enhances the reliability and efficiency of data-driven operations</span> <a href="#" id="moreButton">more</a>
+                </p>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+{% endblock %}
+
+{% block modal-block %}
+
+{% endblock %}
+
+{% block javascript %}
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+<script src="{% static 'misc/celery_progress/celery_progress.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+
+    <script>
+
+          // -- allow collapsing and expading loading texts ------------------------------------
+          const truncatedText = document.getElementById('truncatedText');
+          const moreButton = document.getElementById('moreButton');
+          const fullText = truncatedText.textContent.trim();
+          const maxLength = 300;
+
+          // Initially truncate the text
+          function truncateText() {
+            if (fullText.length > maxLength) {
+              truncatedText.textContent = fullText.substring(0, maxLength) + '...';
+              moreButton.style.display = 'inline'; // Show the button if truncation occurs
+            } else {
+              truncatedText.textContent = fullText;
+              moreButton.style.display = 'none'; // Hide the button if no truncation is needed
+            }
+          }
+
+          moreButton.addEventListener('click', () => {
+            const isExpanded = truncatedText.getAttribute('data-expanded') === 'true';
+            if (isExpanded) {
+              truncateText();
+              moreButton.textContent = 'more';
+              truncatedText.setAttribute('data-expanded', 'false');
+            } else {
+              truncatedText.textContent = fullText;
+              moreButton.textContent = '[show less]';
+              truncatedText.setAttribute('data-expanded', 'true');
+            }
+          });
+
+          // Initialize
+          truncateText();
+
+        // -- for generation of csrftoken ------------------------------------------------------
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }    
+
+        // -- initialization of select 2 for choosing dateset ----------------------------------
+        $(document).ready(function(){
+
+            // Apply Select2 to the dataset dropdown
+            $('.select2').select2({
+              placeholder: "Choose a dataset",
+              allowClear: true
+            });
+
+            $('[data-toggle="tooltip"]').tooltip(); 
+        });
+    </script>
+
+
+    <script>
+
+
+
+        $(function () {
+
+            var term = new Terminal();
+            term.open(document.getElementById('terminal'));
+            term.write('$ ');
+            term.write('\x1B[31mReady to accept job!\x1B[0m\n\r');
+            
+            let csrftoken = getCookie('csrftoken'); 
+            let trans_id = $('.task').attr("trans_id");
+
+            // http://127.0.0.1:8000/app/api/d/task/info/?trans_id=f0b91f1a-a2cf-435f-b5aa-9ee65ab18fab
+            
+            $(document).on('click','.task-download',function(e){
+                e.preventDefault();
+                
+                window.open("/app/api/d/result/file/"+trans_id, '_blank');
+            });
+
+            $(document).on('click','.task-reset', function(e){
+                e.preventDefault();
+                //fetch task data
+                $.ajax({
+                    type: "GET",
+                    url: "/app/api/d/task/info/?trans_id="+trans_id,
+                    headers: {
+                        'X-CSRFToken': csrftoken // Include CSRF token in headers
+                    },
+                    cache: false,
+                    async: true,
+                    success: function (res) {
+                        // console.log(res[0].trans_id);
+                        if (res[0].status_id == 0) {
+                            Swal.fire({
+                              position: "top-end",
+                              icon: "info",
+                              title: "The task not yet stated!",
+                              showConfirmButton: false,
+                              timer: 500
+                            });
+                        }else{
+                            //get task info
+                            Swal.fire({
+                              title: "Are you sure?",
+                              text: "You are about to reset task# "+ res[0].trans_id,
+                              icon: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#3085d6",
+                              cancelButtonColor: "#d33",
+                              confirmButtonText: "Yes, reset it!"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                    // console.log('trans-reset:' + trans_id);
+                                    var cancelURL = '/app/d/task/reset/' + trans_id;
+
+                                    $.get(cancelURL, function(response) {
+                                        // Handle the response from the server
+                                        if (response.success) {
+                                            // Task was successfully cancelled
+                                            term.writeln('Task resetted successfully');
+                                            $('.task-reset').addClass("disabled")
+                                            $('.task-cancel').addClass("disabled")
+                                            $('.task-start').removeClass("disabled")
+                                            $('.task-download').addClass('disabled')
+
+                                        } else {
+                                            // Task cancellation failed
+                                            term.writeln('Failed to reset task: ' + response.error);
+                                        }
+                                    });
+                              }
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    },
+                })
+
+
+            });
+
+
+            $(document).on('click','.task-cancel', function(e){
+                e.preventDefault();
+                //fetch task data
+                $.ajax({
+                    type: "GET",
+                    url: "/app/api/d/task/info/?trans_id="+trans_id,
+                    headers: {
+                        'X-CSRFToken': csrftoken // Include CSRF token in headers
+                    },
+                    cache: false,
+                    async: true,
+                    success: function (res) {
+                        // console.log(res[0].process_id);
+                        if (res[0].process_id == null || res[0].status_id != 1) {
+                            Swal.fire({
+                              position: "top-end",
+                              icon: "info",
+                              title: "The task is not running",
+                              showConfirmButton: false,
+                              timer: 500
+                            });
+                        }else{
+                            //get task info
+                            Swal.fire({
+                              title: "Are you sure?",
+                              text: "You are about to cancel task# "+ res[0].process_id,
+                              icon: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#3085d6",
+                              cancelButtonColor: "#d33",
+                              confirmButtonText: "Yes, delete it!"
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                    var process_id = res[0].process_id; // Replace this with the actual task ID
+                                    console.log('task-kill:' + process_id);
+                                    var cancelURL = '/app/d/task/cancel/' + process_id;
+
+                                    $.get(cancelURL, function(response) {
+                                        // Handle the response from the server
+                                        if (response.cancelled) {
+                                            // Task was successfully cancelled
+                                            term.writeln('Task ' + response.process_id + ' cancelled !');
+
+                                            $('.task-reset').removeClass("disabled")
+                                            $('.task-cancel').addClass("disabled")
+                                            $('.task-start').removeClass("disabled")
+                                            $('.task-download').addClass('disabled')
+
+
+                                        } else {
+                                            // Task cancellation failed
+                                            term.writeln('Failed to cancel task: ' + response.error);
+                                        }
+                                    });
+                              }
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    },
+                })
+
+
+            });
+
+            $("#form-import").on("submit", (e) => {
+                e.preventDefault()
+                // let formData = new FormData($("#form-import")[0])
+                // formData.append("csrfmiddlewaretoken", "{% csrf_token %}")
+
+            })
+
+
+            //update result -- disabled for a when ui is on development
+            // setInterval(function() {
+               
+            //     let statusMessage = '';
+            //     // var csrftoken = getCookie('csrftoken'); 
+            //     $.ajax({
+            //         type: "GET",
+            //         url: "django_url_tasks-info",
+            //         headers: {
+            //             'X-CSRFToken': csrftoken
+            //         },
+            //         data:{
+            //             trans_id:trans_id
+            //         },
+            //         cache: false,
+            //         async: true,
+            //         success: function (res) {
+            //             // console.log(res[0]);
+            //             $('.progress-bar').attr('style',"width:"+res[0].progress+"%");
+            //             $('.progress-text').html(res[0].progress);
+
+            //             if (res[0].status_id == 0) {
+            //                 statusMessage = 'Waiting';
+            //             } else if (res[0].status_id == 1) {
+            //                 statusMessage = 'Unfinished';
+            //             } else if (res[0].status_id == 2) {
+            //                 statusMessage = 'Finished';
+            //             } else if (res[0].status_id == 3) {
+            //                 statusMessage = 'Stale';
+            //             } else if (res[0].status_id == 4) {
+            //                 statusMessage = 'Cancelled';
+            //             }
+
+            //             $('.status-container').html(statusMessage);
+            //             $('.progress-container').html(convertToPercentage(res[0].progress));
+            //             $('.record-count-container').html(res[0].row_count);
+            //             $('.task-description').html(res[0].description);
+            //             $('.task-time-added-container').html(formatDate(res[0].time_added));
+            //             $('.task-last-checkpoint-container').html(formatDate(res[0].checkpoint_time));
+            //             $('.source-dataset-info-container').html(res[0].dataset_uid);
+
+            //             $('.info-checkpoint_time').html(res[0].checkpoint_time);
+            //             $('.info-classification').html(res[0].classification);
+            //             $('.info-dataset_date').html(res[0].dataset_date);
+            //             $('.info-dataset_description').html(res[0].dataset_description);
+            //             $('.info-dataset_uid').html(res[0].dataset_uid);
+            //             $('.info-description').html(res[0].description);
+            //             $('.info-process_id').html(res[0].process_id);
+            //             $('.info-progress').html(res[0].progress);
+            //             $('.info-row_count').html(res[0].row_count);
+            //             $('.info-time_added').html(res[0].time_added);
+            //             $('.info-trans_id').html(res[0].trans_id);
+            //             $('.info-trans_status').html(res[0].trans_status);
+
+            //             console.log(res[0])
+
+
+            //         }, error: function (err) {
+            //             console.log(err);
+            //         }
+
+            //     });
+            // }, 5000); 
+
+            function convertToPercentage(value) {
+                try {
+                    // Check if the value is a valid number
+                    if (isNaN(value)) {
+                        throw new Error("Invalid input");
+                    }
+
+                    // Round the value to two decimal places
+                    const percentage = value.toFixed(2);
+
+                    // Return the formatted percentage with the "%" sign
+                    return `${percentage}%`;
+                } catch (error) {
+                    // Return a blank string in case of an error
+                    return '';
+                }
+            }
+
+
+
+            function formatDate(inputDate) {
+                try {
+                    // Create a new Date object from the input string
+                    const dateObj = new Date(inputDate);
+
+                    // Check if the date is valid
+                    if (isNaN(dateObj)) {
+                        throw new Error("Invalid date");
+                    }
+
+                    // Get the month (zero-indexed, so we add 1)
+                    const month = dateObj.getMonth() + 1;
+
+                    // Get the day of the month
+                    const day = dateObj.getDate();
+
+                    // Get the year
+                    const year = dateObj.getFullYear();
+
+                    // Get the hours and minutes
+                    let hours = dateObj.getHours();
+                    const minutes = dateObj.getMinutes();
+
+                    // Format the minutes to always be two digits
+                    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+                    // Determine if it's AM or PM
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+                    // Convert hours to 12-hour format
+                    hours = hours % 12;
+                    hours = hours ? hours : 12; // the hour '0' should be '12'
+
+                    // Format the final string as mm/dd/yyyy hh:mm AM/PM
+                    return `${month}/${day}/${year} ${hours}:${formattedMinutes} ${ampm}`;
+                } catch (error) {
+                    // Return a blank string in case of an error
+                    return '';
+                }
+            }
+
+            $(document).on('click', '.task-start', function (e) {
+                e.preventDefault();
+                Swal.fire({
+                  title: "Proceed with deduplication?",
+                  text: "Commence task!",
+                  icon: "question",
+                  showCancelButton: true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Yes, do it!"
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    var csrftoken = getCookie('csrftoken'); 
+                    var task_class = $('.task').attr('task_class')
+
+                    $('.task-reset').addClass("disabled")
+                    $('.task-cancel').removeClass("disabled")
+                    $('.task-start').addClass("disabled")
+                    $('.task-download').addClass('disabled')
+
+                    $.ajax({
+                        type: "POST",
+                        url: "django_url_deduplicator_run_task",
+                        headers: {
+                            'X-CSRFToken': csrftoken // Include CSRF token in headers
+                        },
+                        data: {
+                            trans_id: trans_id,
+                            task_class:task_class,
+                        },
+                         // contentType: false,
+                         // processData: false,
+                        cache: false,
+                        async: true,
+                        success: function (res) {
+                            getProgress(
+                                res.task_id,
+                                progressBarId = "import-progress-bar",
+                                progressBarMessageId = "import-progress-message",
+                                isDownloadFile = false
+                            );
+                            
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        },
+                    })
+
+                  }
+                });
+            });
+
+            runExportData = () => {
+                $.ajax({
+                    type: "GET",
+                    url: "django_url_export",
+                    success: (res) => {
+                        getProgress(
+                            res.task_id,
+                            progressBarId = "export-progress-bar",
+                            progressBarMessageId = "export-progress-message",
+                            isDownloadFile = true
+                        )
+                    },
+                    error: (err) => {
+                        console.log(err);
+                    },
+                })
+            }
+
+            getProgress = (taskId, progressBarId, progressBarMessageId, isDownloadFile = false) => {
+                var progressUrl = `django_url_progress?task_id=${taskId}`;
+
+                //--------------------------------------------------------------------------
+                function onExportUserProgress(progressBarElement, progressBarMessageElement, progress) {
+                    progressBarMessageElement.innerHTML = `Progress ${progress.percent}% complete!`;
+                    if (progress.percent > 0) {
+                        try {
+                            //get the sta
+                            var sta = JSON.parse(progress.description).sta;
+                            // var msg = JSON.parse(progress.description).msg;
+                            // console.log(progress.description)
+                            var line = `sta: ${sta} | ${progress.current}/${progress.total} | ${progress.percent}%`
+                            var terminal = $('.terminal');
+                            if (terminal.attr('last_line') !== line) {
+                                terminal.attr('last_line',line);
+                                term.writeln(line);    
+                            }
+                        }
+                        catch(err) {
+                          //do nothing
+                        }      
+                                                
+                    }
+                    // disabled progressbar update
+                    progressBarElement.setAttribute("style", `width: ${progress.percent}%`);
+                    progressBarElement.setAttribute("aria-valuenow", progress.percent);
+                }
+
+                //--------------------------------------------------------------------------
+                function onExportUserSuccess(progressBarElement, progressBarMessageElement, result) {
+                    
+                    term.writeln(`Congratulation! `);
+
+                    console.log(result)
+
+                    if (result.finish) {
+
+                      $('.task-reset').removeClass("disabled")
+                      $('.task-cancel').addClass("disabled")
+                      $('.task-start').removeClass("disabled")
+                      $('.task-download').removeClass('disabled')
+
+                    }else{
+
+                      $('.task-reset').addClass("disabled")
+                      $('.task-cancel').addClass("disabled")
+                      $('.task-start').addClass("disabled")
+                      $('.task-download').addClass('disabled')
+
+                    }
+
+
+
+
+                    // progressBarMessageElement.innerHTML = "Complete!";
+                    // progressBarElement.setAttribute("style", "width: 0%");
+                    progressBarElement.setAttribute("aria-valuenow", 0);
+                    if (isDownloadFile) window.open(`django_url_download?task_id=${taskId}`, '_blank');
+
+                }
+
+                CeleryProgressBar.initProgressBar(progressUrl, {
+                    progressBarId: progressBarId,
+                    progressBarMessageId: progressBarMessageId,
+                    onProgress: onExportUserProgress,
+                    onSuccess: onExportUserSuccess,
+                });
+            }
+
+        });
+    </script>
+
+{% endblock %}

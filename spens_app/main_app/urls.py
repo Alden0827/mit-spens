@@ -17,8 +17,11 @@ urlpatterns = [
     path('visualization/', views.data_visualization, name='data_visualization'),
     path('save_picture/', views.save_picture, name='save_picture'),
     path('mobile/', views.mobile, name='mobile'),
-    path('api/bene/pics/<int:beneficiary_id>/', views.get_beneficiary_picture, name='get_beneficiary_picture'),
     
+    path('api/bene/pics/<int:beneficiary_id>/', views.get_beneficiary_picture, name='get_beneficiary_picture'),
+    path('dqa/', views.deduplication_page, name='deduplication_page'),
+    
+
 
 
 
